@@ -47,12 +47,6 @@ sap.ui.define([
 			
 			this.getView().byId("moeda").setValue("");
 			
-			oDialog.setEscapeHandler(function(oPromise){
-				if(oJSONModel.hasPendingChanges()){
-					oJSONModel.resetChanges();
-				}
-			});
-			
 			var oNovoCotacao = {
 				"Id": 0,
 				"Data": new Date(),
