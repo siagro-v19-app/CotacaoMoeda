@@ -1,0 +1,45 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core">
+   <Dialog
+		id="CotacaoMoedaDialog"
+		title="{view>/titulo}"
+		class="sapUiSmallMargin">
+   	
+   		<VBox id="vBoxCotacao" class="sapUiSmallMargin sapUiSizeCompact">	
+			<Label text="Data:" labelFor="data" required="true"/>
+			<DatePicker id="data" dateValue="{model>/Data}" displayFormat="dd.MM.yyyy" placeholder="dd.mm.aaaa"/>
+			
+			<Label text="Cotação:" labelFor="cotacao"/>
+			<Input value="{
+						path: 'model>/Cotacao',
+						type: 'sap.ui.model.odata.type.Single',
+						formatOptions: {
+							decimals: 2,
+							decimalSeparator: ','
+						}}" id="cotacao" required="true"/>
+			
+			<Label text="Moeda:" labelFor="moeda"/>
+			<Input selectedKey="{model>/Moeda}"
+				textFormatMode="KeyValue"
+				showSuggestion="true"
+				showValueHelp="true"
+				valueHelpRequest="handleSearchMoeda"
+				suggestionItems="{
+					path: '/Moedas',
+					events: {
+						dataReceived: '.moedaReceived'
+					}}"
+				id="moeda">
+				<suggestionItems>
+					<core:ListItem key="{Codigo}" text="{Nome}"/>
+				</suggestionItems>
+			</Input>
+		</VBox>
+   		
+   		<buttons>
+   			<Button text="Salvar" press="onSaveDialog"/>
+   			<Button text="Fechar" press="onCloseDialog"/>
+   		</buttons>
+   </Dialog>
+</core:FragmentDefinition>

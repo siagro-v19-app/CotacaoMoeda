@@ -1,0 +1,2038 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" Version="1.0">
+    <edmx:DataServices
+        xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="1.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="siagro">
+            <EntityType Name="UnidadeMedida">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Sigla" Type="Edm.String" Nullable="false" MaxLength="4"/>
+            </EntityType>
+            <EntityType Name="PedidoVenda">
+                <Key>
+                    <PropertyRef Name="Numero"/>
+                </Key>
+                <Property Name="Cliente" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Emissao" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="Numero" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Observacoes" Type="Edm.String" Nullable="true" MaxLength="250"/>
+                <NavigationProperty Name="ParceiroNegocioDetails" Relationship="siagro.PedidoVenda_ParceiroNegocio_Many_ZeroToOne0" FromRole="PedidoVenda" ToRole="ParceiroNegocio"/>
+                <NavigationProperty Name="PedidoVendaItensDetails" Relationship="siagro.PedidoVenda_PedidoVendaItens_One_Many0" FromRole="PedidoVenda" ToRole="PedidoVendaItens"/>
+            </EntityType>
+            <EntityType Name="ServicoArmazem">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Ativo" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Produto" Type="Edm.Int32" Nullable="false"/>
+                <NavigationProperty Name="ProdutoDetails" Relationship="siagro.ServicoArmazem_Produto_Many_ZeroToOne0" FromRole="ServicoArmazem" ToRole="Produto"/>
+            </EntityType>
+            <EntityType Name="Produto">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="15"/>
+                <Property Name="ContaContabil" Type="Edm.String" Nullable="true" MaxLength="50"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="ItemContabil" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="UnidadeMedida" Type="Edm.Int32" Nullable="false"/>
+                <NavigationProperty Name="PlanoContaDetails" Relationship="siagro.Produto_PlanoConta_Many_ZeroToOne0" FromRole="Produto" ToRole="PlanoConta"/>
+                <NavigationProperty Name="ItemContabilDetails" Relationship="siagro.Produto_ItemContabil_Many_ZeroToOne0" FromRole="Produto" ToRole="ItemContabil"/>
+                <NavigationProperty Name="UnidadeMedidaDetails" Relationship="siagro.Produto_UnidadeMedida_Many_ZeroToOne0" FromRole="Produto" ToRole="UnidadeMedida"/>
+            </EntityType>
+            <EntityType Name="CotacaoMoeda">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Cotacao" Type="Edm.Single" Nullable="true"/>
+                <Property Name="Data" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Moeda" Type="Edm.String" Nullable="true" MaxLength="3"/>
+                <NavigationProperty Name="MoedaDetails" Relationship="siagro.CotacaoMoeda_Moeda_Many_ZeroToOne0" FromRole="CotacaoMoeda" ToRole="Moeda"/>
+            </EntityType>
+            <EntityType Name="Variedade">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="MovimentoContaBancaria">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Cheque" Type="Edm.String" Nullable="true" MaxLength="10"/>
+                <Property Name="Conciliado" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="ContaBancaria" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Credito" Type="Edm.Single" Nullable="false"/>
+                <Property Name="Data" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="Debito" Type="Edm.Single" Nullable="false"/>
+                <Property Name="Documento" Type="Edm.String" Nullable="true" MaxLength="150"/>
+                <Property Name="Historico" Type="Edm.String" Nullable="true" MaxLength="200"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <NavigationProperty Name="ContaBancariaDetails" Relationship="siagro.MovimentoContaBancaria_ContaBancaria_Many_ZeroToOne0" FromRole="MovimentoContaBancaria" ToRole="ContaBancaria"/>
+            </EntityType>
+            <EntityType Name="MovimentacaoArmazem">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="ChaveNotaFiscal" Type="Edm.String" Nullable="true" MaxLength="44"/>
+                <Property Name="ContratoCompra" Type="Edm.String" Nullable="true" MaxLength="9"/>
+                <Property Name="CreditoMonsanto" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Data" Type="Edm.DateTime" Nullable="false"/>
+                <Property Name="DataHoraPesoBruto" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="DataHoraTara" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="DescontoLimpeza" Type="Edm.Single" Nullable="false"/>
+                <Property Name="DescontoSecagem" Type="Edm.Single" Nullable="false"/>
+                <Property Name="DescontosDiversos" Type="Edm.Single" Nullable="false"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Lote" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Motorista" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="NumeroNotaFiscal" Type="Edm.String" Nullable="true" MaxLength="9"/>
+                <Property Name="Observacoes" Type="Edm.String" Nullable="true" MaxLength="1000"/>
+                <Property Name="Operacao" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Parceiro" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="PesoBruto" Type="Edm.Single" Nullable="false"/>
+                <Property Name="PesoLiquido" Type="Edm.Single" Nullable="false"/>
+                <Property Name="PesoRecebido" Type="Edm.Single" Nullable="false"/>
+                <Property Name="Produto" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Quadro" Type="Edm.String" Nullable="true" MaxLength="10"/>
+                <Property Name="QuantidadeNotaFiscal" Type="Edm.Single" Nullable="true"/>
+                <Property Name="SerieNotaFiscal" Type="Edm.String" Nullable="true" MaxLength="3"/>
+                <Property Name="Tara" Type="Edm.Single" Nullable="false"/>
+                <Property Name="ValorTotalNotaFiscal" Type="Edm.Single" Nullable="true"/>
+                <Property Name="ValorUnitarioNotaFiscal" Type="Edm.Single" Nullable="true"/>
+                <Property Name="Veiculo" Type="Edm.Int32" Nullable="false"/>
+                <NavigationProperty Name="ContratoCompraDetails" Relationship="siagro.MovimentacaoArmazem_ContratoCompra_Many_ZeroToOne0" FromRole="MovimentacaoArmazem" ToRole="ContratoCompra"/>
+                <NavigationProperty Name="CreditoMonsantoDetails" Relationship="siagro.MovimentacaoArmazem_CreditoMonsanto_Many_ZeroToOne0" FromRole="MovimentacaoArmazem" ToRole="CreditoMonsanto"/>
+                <NavigationProperty Name="LoteArmazenagemDetails" Relationship="siagro.MovimentacaoArmazem_LoteArmazenagem_Many_ZeroToOne0" FromRole="MovimentacaoArmazem" ToRole="LoteArmazenagem"/>
+                <NavigationProperty Name="MotoristaDetails" Relationship="siagro.MovimentacaoArmazem_Motorista_Many_ZeroToOne0" FromRole="MovimentacaoArmazem" ToRole="Motorista"/>
+                <NavigationProperty Name="ParceiroNegocioDetails" Relationship="siagro.MovimentacaoArmazem_ParceiroNegocio_Many_ZeroToOne0" FromRole="MovimentacaoArmazem" ToRole="ParceiroNegocio"/>
+                <NavigationProperty Name="ProdutoDetails" Relationship="siagro.MovimentacaoArmazem_Produto_Many_ZeroToOne0" FromRole="MovimentacaoArmazem" ToRole="Produto"/>
+                <NavigationProperty Name="VeiculoDetails" Relationship="siagro.MovimentacaoArmazem_Veiculo_Many_ZeroToOne0" FromRole="MovimentacaoArmazem" ToRole="Veiculo"/>
+            </EntityType>
+            <EntityType Name="Uf">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Sigla" Type="Edm.String" Nullable="false" MaxLength="2"/>
+            </EntityType>
+            <EntityType Name="Banco">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Nome" Type="Edm.String" Nullable="false" MaxLength="100"/>
+            </EntityType>
+            <EntityType Name="ItemContabil">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Bloqueado" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="Condicao" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="150"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="LocalDescarga">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="InformacoesNotaFiscal" Type="Edm.String" Nullable="false" MaxLength="1000"/>
+                <Property Name="Observacoes" Type="Edm.String" Nullable="false" MaxLength="1000"/>
+            </EntityType>
+            <EntityType Name="Usuario">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="NomeCompleto" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Senha" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Username" Type="Edm.String" Nullable="true" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="CreditoMonsanto">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="true" MaxLength="3"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="LocalEstoque">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Inativo" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="Municipio">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="7"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Nome" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Uf" Type="Edm.Int32" Nullable="false"/>
+                <NavigationProperty Name="UfDetails" Relationship="siagro.Municipio_Uf_Many_ZeroToOne0" FromRole="Municipio" ToRole="Uf"/>
+            </EntityType>
+            <EntityType Name="Modulo">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Nome" Type="Edm.String" Nullable="true" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="CstIpi">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="150"/>
+            </EntityType>
+            <EntityType Name="Safra">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Inativa" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="TabelaTarifa">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Carencia" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Inativa" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="TaxaArmazenagem" Type="Edm.Single" Nullable="false"/>
+                <Property Name="TaxaExpurgo" Type="Edm.Single" Nullable="false"/>
+                <Property Name="VencimentoArmazenagem" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="VencimentoExpurgo" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="VigenteAte" Type="Edm.DateTime" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="CstPisCofins">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="150"/>
+            </EntityType>
+            <EntityType Name="CaracteristicaQualidade">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="NaoExibir" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="LoteArmazenagem">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Armazem" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Cliente" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Data" Type="Edm.DateTime" Nullable="false"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Encerrado" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Observacoes" Type="Edm.String" Nullable="true" MaxLength="1000"/>
+                <Property Name="Produto" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="ReferenciaExterna" Type="Edm.String" Nullable="true" MaxLength="30"/>
+                <Property Name="Saldo" Type="Edm.Single" Nullable="false"/>
+                <Property Name="Tabela" Type="Edm.Int32" Nullable="false"/>
+                <NavigationProperty Name="LocalEstoqueDetails" Relationship="siagro.LoteArmazenagem_LocalEstoque_Many_ZeroToOne0" FromRole="LoteArmazenagem" ToRole="LocalEstoque"/>
+                <NavigationProperty Name="ParceiroNegocioDetails" Relationship="siagro.LoteArmazenagem_ParceiroNegocio_Many_ZeroToOne0" FromRole="LoteArmazenagem" ToRole="ParceiroNegocio"/>
+                <NavigationProperty Name="ProdutoDetails" Relationship="siagro.LoteArmazenagem_Produto_Many_ZeroToOne0" FromRole="LoteArmazenagem" ToRole="Produto"/>
+                <NavigationProperty Name="TabelaTarifaDetails" Relationship="siagro.LoteArmazenagem_TabelaTarifa_Many_ZeroToOne0" FromRole="LoteArmazenagem" ToRole="TabelaTarifa"/>
+            </EntityType>
+            <EntityType Name="Motorista">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Bloqueado" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="Cpf" Type="Edm.String" Nullable="true" MaxLength="20"/>
+                <Property Name="Email" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Nome" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Observacoes" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="ParceiroNegocio" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Telefone" Type="Edm.String" Nullable="true" MaxLength="20"/>
+                <NavigationProperty Name="ParceiroNegocioDetails" Relationship="siagro.Motorista_ParceiroNegocio_Many_ZeroToOne0" FromRole="Motorista" ToRole="ParceiroNegocio"/>
+            </EntityType>
+            <EntityType Name="ContratoCompraSaldo">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Armazem" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Contrato" Type="Edm.String" Nullable="false" MaxLength="9"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Quantidade" Type="Edm.Single" Nullable="false"/>
+                <Property Name="Royalties" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Saldo" Type="Edm.Single" Nullable="false"/>
+                <Property Name="UnidadeMedida" Type="Edm.Int32" Nullable="false"/>
+                <NavigationProperty Name="LocalEstoqueDetails" Relationship="siagro.ContratoCompraSaldo_LocalEstoque_Many_ZeroToOne0" FromRole="ContratoCompraSaldo" ToRole="LocalEstoque"/>
+                <NavigationProperty Name="ContratoCompraDetails" Relationship="siagro.ContratoCompraSaldo_ContratoCompra_Many_ZeroToOne0" FromRole="ContratoCompraSaldo" ToRole="ContratoCompra"/>
+                <NavigationProperty Name="CreditoMonsantoDetails" Relationship="siagro.ContratoCompraSaldo_CreditoMonsanto_Many_ZeroToOne0" FromRole="ContratoCompraSaldo" ToRole="CreditoMonsanto"/>
+                <NavigationProperty Name="UnidadeMedidaDetails" Relationship="siagro.ContratoCompraSaldo_UnidadeMedida_Many_ZeroToOne0" FromRole="ContratoCompraSaldo" ToRole="UnidadeMedida"/>
+            </EntityType>
+            <EntityType Name="Empresa">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Bairro" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Cep" Type="Edm.String" Nullable="true" MaxLength="10"/>
+                <Property Name="Cnpj" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="Complemento" Type="Edm.String" Nullable="true" MaxLength="50"/>
+                <Property Name="Contato" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Email" Type="Edm.String" Nullable="true" MaxLength="150"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="InsEstadual" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Logradouro" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Municipio" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="NomeFantasia" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Numero" Type="Edm.String" Nullable="true" MaxLength="20"/>
+                <Property Name="Pais" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="RazaoSocial" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="RegimeTributario" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Telefone" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Uf" Type="Edm.Int32" Nullable="true"/>
+                <NavigationProperty Name="MunicipioDetails" Relationship="siagro.Empresa_Municipio_Many_ZeroToOne0" FromRole="Empresa" ToRole="Municipio"/>
+                <NavigationProperty Name="PaisBacenDetails" Relationship="siagro.Empresa_PaisBacen_Many_ZeroToOne0" FromRole="Empresa" ToRole="PaisBacen"/>
+                <NavigationProperty Name="UfDetails" Relationship="siagro.Empresa_Uf_Many_ZeroToOne0" FromRole="Empresa" ToRole="Uf"/>
+            </EntityType>
+            <EntityType Name="ContaBancariaParceiros">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Agencia" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="Banco" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Cnpj" Type="Edm.String" Nullable="true" MaxLength="20"/>
+                <Property Name="ContaCorrente" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="Cpf" Type="Edm.String" Nullable="true" MaxLength="20"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Parceiro" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Titular" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <NavigationProperty Name="ParceiroNegocioDetails" Relationship="siagro.ContaBancariaParceiros_ParceiroNegocio_Many_ZeroToOne0" FromRole="ContaBancariaParceiros" ToRole="ParceiroNegocio"/>
+            </EntityType>
+            <EntityType Name="PedidoVendaItens">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Pedido" Type="Edm.String" Nullable="true" MaxLength="10"/>
+                <Property Name="Produto" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Quantidade" Type="Edm.Single" Nullable="true"/>
+                <Property Name="Total" Type="Edm.Single" Nullable="true"/>
+                <Property Name="ValorUnitario" Type="Edm.Single" Nullable="true"/>
+                <NavigationProperty Name="PedidoVendaDetails" Relationship="siagro.PedidoVendaItens_PedidoVenda_Many_ZeroToOne1" FromRole="PedidoVendaItens" ToRole="PedidoVenda"/>
+                <NavigationProperty Name="ProdutoDetails" Relationship="siagro.PedidoVendaItens_Produto_Many_ZeroToOne0" FromRole="PedidoVendaItens" ToRole="Produto"/>
+            </EntityType>
+            <EntityType Name="ContratoCompra">
+                <Key>
+                    <PropertyRef Name="Numero"/>
+                </Key>
+                <Property Name="AliquotaFunrural" Type="Edm.Single" Nullable="true"/>
+                <Property Name="Comissao" Type="Edm.Single" Nullable="false"/>
+                <Property Name="Corretor" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Cotacao" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Emissao" Type="Edm.DateTime" Nullable="false"/>
+                <Property Name="EntregaAte" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="EntregaDe" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="FiscalEncerrado" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="Modalidade" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Moeda" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Numero" Type="Edm.String" Nullable="false" MaxLength="9"/>
+                <Property Name="Observacoes" Type="Edm.String" Nullable="true" MaxLength="1000"/>
+                <Property Name="Produto" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Quantidade" Type="Edm.Single" Nullable="false"/>
+                <Property Name="ReferenciaExterna" Type="Edm.String" Nullable="true" MaxLength="50"/>
+                <Property Name="RetemFunrural" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="Safra" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="TipoFrete" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Unidade" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="ValorUnitario" Type="Edm.Single" Nullable="false"/>
+                <Property Name="Variedade" Type="Edm.Int32" Nullable="true"/>
+                <NavigationProperty Name="CorretorDetails" Relationship="siagro.ContratoCompra_Corretor_Many_ZeroToOne0" FromRole="ContratoCompra" ToRole="Corretor"/>
+                <NavigationProperty Name="CotacaoMoedaDetails" Relationship="siagro.ContratoCompra_CotacaoMoeda_Many_ZeroToOne0" FromRole="ContratoCompra" ToRole="CotacaoMoeda"/>
+                <NavigationProperty Name="MoedaDetails" Relationship="siagro.ContratoCompra_Moeda_Many_ZeroToOne0" FromRole="ContratoCompra" ToRole="Moeda"/>
+                <NavigationProperty Name="ProdutoDetails" Relationship="siagro.ContratoCompra_Produto_Many_ZeroToOne0" FromRole="ContratoCompra" ToRole="Produto"/>
+                <NavigationProperty Name="SafraDetails" Relationship="siagro.ContratoCompra_Safra_Many_ZeroToOne0" FromRole="ContratoCompra" ToRole="Safra"/>
+                <NavigationProperty Name="ContratoCompraSaldoDetails" Relationship="siagro.ContratoCompraSaldo_ContratoCompra_Many_ZeroToOne0" FromRole="ContratoCompra" ToRole="ContratoCompraSaldo"/>
+                <NavigationProperty Name="UnidadeMedidaDetails" Relationship="siagro.ContratoCompra_UnidadeMedida_Many_ZeroToOne0" FromRole="ContratoCompra" ToRole="UnidadeMedida"/>
+                <NavigationProperty Name="VariedadeDetails" Relationship="siagro.ContratoCompra_Variedade_Many_ZeroToOne0" FromRole="ContratoCompra" ToRole="Variedade"/>
+            </EntityType>
+            <EntityType Name="Moeda">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Nome" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="Simbolo" Type="Edm.String" Nullable="false" MaxLength="3"/>
+            </EntityType>
+            <EntityType Name="NaturezaOperacao">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="AliquotaCofins" Type="Edm.Single" Nullable="true"/>
+                <Property Name="AliquotaIcms" Type="Edm.Single" Nullable="true"/>
+                <Property Name="AliquotaIpi" Type="Edm.Single" Nullable="true"/>
+                <Property Name="AliquotaPis" Type="Edm.Single" Nullable="true"/>
+                <Property Name="Cfop" Type="Edm.String" Nullable="true" MaxLength="4"/>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="CstCofins" Type="Edm.String" Nullable="true" MaxLength="2"/>
+                <Property Name="CstIcms" Type="Edm.String" Nullable="true" MaxLength="4"/>
+                <Property Name="CstIpi" Type="Edm.String" Nullable="true" MaxLength="2"/>
+                <Property Name="CstPis" Type="Edm.String" Nullable="true" MaxLength="2"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="GeraDuplicata" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="MovimentaEstoque" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="PercentualDiferimentoIcms" Type="Edm.Single" Nullable="true"/>
+                <Property Name="PercentualReducaoBC" Type="Edm.Single" Nullable="true"/>
+                <Property Name="TextoNotaFiscal" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <NavigationProperty Name="CfopDetails" Relationship="siagro.NaturezaOperacao_Cfop_Many_ZeroToOne0" FromRole="NaturezaOperacao" ToRole="Cfop"/>
+                <NavigationProperty Name="CstCofinsDetails" Relationship="siagro.NaturezaOperacao_CstCofins_Many_ZeroToOne0" FromRole="NaturezaOperacao" ToRole="CstCofins"/>
+                <NavigationProperty Name="CstIcmsDetails" Relationship="siagro.NaturezaOperacao_CstIcms_Many_ZeroToOne0" FromRole="NaturezaOperacao" ToRole="CstIcms"/>
+                <NavigationProperty Name="CstIpiDetails" Relationship="siagro.NaturezaOperacao_CstIpi_Many_ZeroToOne0" FromRole="NaturezaOperacao" ToRole="CstIpi"/>
+                <NavigationProperty Name="CstPisDetails" Relationship="siagro.NaturezaOperacao_CstPis_Many_ZeroToOne0" FromRole="NaturezaOperacao" ToRole="CstPis"/>
+            </EntityType>
+            <EntityType Name="CstPis">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="150"/>
+            </EntityType>
+            <EntityType Name="CstCofins">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="150"/>
+            </EntityType>
+            <EntityType Name="ContaPagar">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Acrescimo" Type="Edm.Single" Nullable="true"/>
+                <Property Name="CentroCusto" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="ContaContabil" Type="Edm.String" Nullable="true" MaxLength="50"/>
+                <Property Name="Desconto" Type="Edm.Single" Nullable="true"/>
+                <Property Name="Emissao" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="Historico" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="ParceiroNegocio" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Saldo" Type="Edm.Single" Nullable="true"/>
+                <Property Name="TipoTitulo" Type="Edm.String" Nullable="true" MaxLength="3"/>
+                <Property Name="Titulo" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Total" Type="Edm.Single" Nullable="true"/>
+                <Property Name="Valor" Type="Edm.Single" Nullable="true"/>
+                <Property Name="Vencimento" Type="Edm.DateTime" Nullable="true"/>
+                <NavigationProperty Name="CentroCustoDetails" Relationship="siagro.ContaPagar_CentroCusto_Many_ZeroToOne0" FromRole="ContaPagar" ToRole="CentroCusto"/>
+                <NavigationProperty Name="PlanoContaDetails" Relationship="siagro.ContaPagar_PlanoConta_Many_ZeroToOne0" FromRole="ContaPagar" ToRole="PlanoConta"/>
+                <NavigationProperty Name="ParceiroNegocioDetails" Relationship="siagro.ContaPagar_ParceiroNegocio_Many_ZeroToOne0" FromRole="ContaPagar" ToRole="ParceiroNegocio"/>
+                <NavigationProperty Name="TipoTituloDetails" Relationship="siagro.ContaPagar_TipoTitulo_Many_ZeroToOne0" FromRole="ContaPagar" ToRole="TipoTitulo"/>
+            </EntityType>
+            <EntityType Name="ContaReceber">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Acrescimo" Type="Edm.Single" Nullable="true"/>
+                <Property Name="CentroCusto" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="ContaContabil" Type="Edm.String" Nullable="true" MaxLength="50"/>
+                <Property Name="Desconto" Type="Edm.Single" Nullable="true"/>
+                <Property Name="Emissao" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="Historico" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="ParceiroNegocio" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Saldo" Type="Edm.Single" Nullable="true"/>
+                <Property Name="TipoTitulo" Type="Edm.String" Nullable="true" MaxLength="3"/>
+                <Property Name="Titulo" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="Total" Type="Edm.Single" Nullable="true"/>
+                <Property Name="Valor" Type="Edm.Single" Nullable="true"/>
+                <Property Name="Vencimento" Type="Edm.DateTime" Nullable="true"/>
+                <NavigationProperty Name="CentroCustoDetails" Relationship="siagro.ContaReceber_CentroCusto_Many_ZeroToOne0" FromRole="ContaReceber" ToRole="CentroCusto"/>
+                <NavigationProperty Name="PlanoContaDetails" Relationship="siagro.ContaReceber_PlanoConta_Many_ZeroToOne0" FromRole="ContaReceber" ToRole="PlanoConta"/>
+                <NavigationProperty Name="ParceiroNegocioDetails" Relationship="siagro.ContaReceber_ParceiroNegocio_Many_ZeroToOne0" FromRole="ContaReceber" ToRole="ParceiroNegocio"/>
+                <NavigationProperty Name="TipoTituloDetails" Relationship="siagro.ContaReceber_TipoTitulo_Many_ZeroToOne0" FromRole="ContaReceber" ToRole="TipoTitulo"/>
+            </EntityType>
+            <EntityType Name="Corretor">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Email" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Municipio" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Nome" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Observacoes" Type="Edm.String" Nullable="true" MaxLength="1000"/>
+                <Property Name="ParceiroNegocio" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Telefone" Type="Edm.String" Nullable="true" MaxLength="20"/>
+                <Property Name="Uf" Type="Edm.Int32" Nullable="true"/>
+                <NavigationProperty Name="MunicipioDetails" Relationship="siagro.Corretor_Municipio_Many_ZeroToOne0" FromRole="Corretor" ToRole="Municipio"/>
+                <NavigationProperty Name="ParceiroNegocioDetails" Relationship="siagro.Corretor_ParceiroNegocio_Many_ZeroToOne0" FromRole="Corretor" ToRole="ParceiroNegocio"/>
+                <NavigationProperty Name="UfDetails" Relationship="siagro.Corretor_Uf_Many_ZeroToOne0" FromRole="Corretor" ToRole="Uf"/>
+            </EntityType>
+            <EntityType Name="Aplicativo">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="AppId" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Modulo" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="NomeMenu" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Path" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <NavigationProperty Name="ModuloDetails" Relationship="siagro.Aplicativo_Modulo_Many_ZeroToOne0" FromRole="Aplicativo" ToRole="Modulo"/>
+            </EntityType>
+            <EntityType Name="TransferenciaPropriedade">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="ContratoCompra" Type="Edm.String" Nullable="true" MaxLength="9"/>
+                <Property Name="Data" Type="Edm.DateTime" Nullable="false"/>
+                <Property Name="Encerrada" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="LoteDestino" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="LoteOrigem" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Observacoes" Type="Edm.String" Nullable="true" MaxLength="1000"/>
+                <Property Name="Produto" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Quantidade" Type="Edm.Single" Nullable="false"/>
+                <NavigationProperty Name="ContratoCompraDetails" Relationship="siagro.TransferenciaPropriedade_ContratoCompra_Many_ZeroToOne0" FromRole="TransferenciaPropriedade" ToRole="ContratoCompra"/>
+                <NavigationProperty Name="LoteArmazenagemDetails" Relationship="siagro.TransferenciaPropriedade_LoteArmazenagem_Many_ZeroToOne0" FromRole="TransferenciaPropriedade" ToRole="LoteArmazenagem"/>
+                <NavigationProperty Name="LoteArmazenagemDetails1" Relationship="siagro.TransferenciaPropriedade_LoteArmazenagem_Many_ZeroToOne1" FromRole="TransferenciaPropriedade" ToRole="LoteArmazenagem"/>
+                <NavigationProperty Name="ProdutoDetails" Relationship="siagro.TransferenciaPropriedade_Produto_Many_ZeroToOne0" FromRole="TransferenciaPropriedade" ToRole="Produto"/>
+            </EntityType>
+            <EntityType Name="ParceiroNegocio">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Bairro" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Cep" Type="Edm.String" Nullable="true" MaxLength="10"/>
+                <Property Name="Cnpj" Type="Edm.String" Nullable="true" MaxLength="20"/>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Complemento" Type="Edm.String" Nullable="true" MaxLength="50"/>
+                <Property Name="ContaContabil" Type="Edm.String" Nullable="true" MaxLength="50"/>
+                <Property Name="Contato" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Cpf" Type="Edm.String" Nullable="true" MaxLength="20"/>
+                <Property Name="Email" Type="Edm.String" Nullable="true" MaxLength="150"/>
+                <Property Name="Filial" Type="Edm.String" Nullable="false" MaxLength="2"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="InsEstadual" Type="Edm.String" Nullable="true" MaxLength="20"/>
+                <Property Name="ItemContabil" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Logradouro" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Municipio" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="NomeFantasia" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Numero" Type="Edm.String" Nullable="true" MaxLength="20"/>
+                <Property Name="Observacoes" Type="Edm.String" Nullable="true" MaxLength="1000"/>
+                <Property Name="Pais" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="RazaoSocial" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Rg" Type="Edm.String" Nullable="true" MaxLength="20"/>
+                <Property Name="Telefone" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <Property Name="Uf" Type="Edm.Int32" Nullable="true"/>
+                <NavigationProperty Name="PlanoContaDetails" Relationship="siagro.ParceiroNegocio_PlanoConta_Many_ZeroToOne0" FromRole="ParceiroNegocio" ToRole="PlanoConta"/>
+                <NavigationProperty Name="ItemContabilDetails" Relationship="siagro.ParceiroNegocio_ItemContabil_Many_ZeroToOne0" FromRole="ParceiroNegocio" ToRole="ItemContabil"/>
+                <NavigationProperty Name="MunicipioDetails" Relationship="siagro.ParceiroNegocio_Municipio_Many_ZeroToOne0" FromRole="ParceiroNegocio" ToRole="Municipio"/>
+                <NavigationProperty Name="PaisBacenDetails" Relationship="siagro.ParceiroNegocio_PaisBacen_Many_ZeroToOne0" FromRole="ParceiroNegocio" ToRole="PaisBacen"/>
+                <NavigationProperty Name="UfDetails" Relationship="siagro.ParceiroNegocio_Uf_Many_ZeroToOne0" FromRole="ParceiroNegocio" ToRole="Uf"/>
+            </EntityType>
+            <EntityType Name="ContaBancaria">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Agencia" Type="Edm.String" Nullable="true" MaxLength="10"/>
+                <Property Name="Banco" Type="Edm.String" Nullable="true" MaxLength="3"/>
+                <Property Name="ContaContabil" Type="Edm.String" Nullable="true" MaxLength="50"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="NumeroConta" Type="Edm.String" Nullable="true" MaxLength="20"/>
+                <Property Name="Titular" Type="Edm.String" Nullable="true" MaxLength="100"/>
+                <NavigationProperty Name="BancoDetails" Relationship="siagro.ContaBancaria_Banco_Many_ZeroToOne0" FromRole="ContaBancaria" ToRole="Banco"/>
+                <NavigationProperty Name="PlanoContaDetails" Relationship="siagro.ContaBancaria_PlanoConta_Many_ZeroToOne0" FromRole="ContaBancaria" ToRole="PlanoConta"/>
+            </EntityType>
+            <EntityType Name="ContratoVenda">
+                <Key>
+                    <PropertyRef Name="Numero"/>
+                </Key>
+                <Property Name="Comissao" Type="Edm.Single" Nullable="false"/>
+                <Property Name="Corretor" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Cotacao" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Emissao" Type="Edm.DateTime" Nullable="false"/>
+                <Property Name="EntregaAte" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="EntregaDe" Type="Edm.DateTime" Nullable="true"/>
+                <Property Name="FiscalEncerrado" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="LocalDescarga" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Modalidade" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Moeda" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Numero" Type="Edm.String" Nullable="false" MaxLength="9"/>
+                <Property Name="Observacoes" Type="Edm.String" Nullable="true" MaxLength="1000"/>
+                <Property Name="Produto" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Quantidade" Type="Edm.Single" Nullable="false"/>
+                <Property Name="ReferenciaExterna" Type="Edm.String" Nullable="true" MaxLength="50"/>
+                <Property Name="Safra" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="TipoFrete" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Unidade" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="ValorUnitario" Type="Edm.Single" Nullable="false"/>
+                <Property Name="Variedade" Type="Edm.Int32" Nullable="true"/>
+                <NavigationProperty Name="CorretorDetails" Relationship="siagro.ContratoVenda_Corretor_Many_ZeroToOne0" FromRole="ContratoVenda" ToRole="Corretor"/>
+                <NavigationProperty Name="CotacaoMoedaDetails" Relationship="siagro.ContratoVenda_CotacaoMoeda_Many_ZeroToOne0" FromRole="ContratoVenda" ToRole="CotacaoMoeda"/>
+                <NavigationProperty Name="LocalDescargaDetails" Relationship="siagro.ContratoVenda_LocalDescarga_Many_ZeroToOne0" FromRole="ContratoVenda" ToRole="LocalDescarga"/>
+                <NavigationProperty Name="MoedaDetails" Relationship="siagro.ContratoVenda_Moeda_Many_ZeroToOne0" FromRole="ContratoVenda" ToRole="Moeda"/>
+                <NavigationProperty Name="ProdutoDetails" Relationship="siagro.ContratoVenda_Produto_Many_ZeroToOne0" FromRole="ContratoVenda" ToRole="Produto"/>
+                <NavigationProperty Name="SafraDetails" Relationship="siagro.ContratoVenda_Safra_Many_ZeroToOne0" FromRole="ContratoVenda" ToRole="Safra"/>
+                <NavigationProperty Name="UnidadeMedidaDetails" Relationship="siagro.ContratoVenda_UnidadeMedida_Many_ZeroToOne0" FromRole="ContratoVenda" ToRole="UnidadeMedida"/>
+                <NavigationProperty Name="VariedadeDetails" Relationship="siagro.ContratoVenda_Variedade_Many_ZeroToOne0" FromRole="ContratoVenda" ToRole="Variedade"/>
+            </EntityType>
+            <EntityType Name="CentroCusto">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="150"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="CstIcms">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="150"/>
+            </EntityType>
+            <EntityType Name="Veiculo">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="CentroCusto" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Comissao" Type="Edm.Single" Nullable="true"/>
+                <Property Name="ContaContabil" Type="Edm.String" Nullable="true" MaxLength="50"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Motorista" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="MunicipioPlaca" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Observacao" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="PesoMaximo" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Placa" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="PlacaCarreta" Type="Edm.String" Nullable="true" MaxLength="50"/>
+                <Property Name="Propriedade" Type="Edm.String" Nullable="true" MaxLength="255"/>
+                <Property Name="UfPlaca" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="VencimentoLicenciamento" Type="Edm.DateTime" Nullable="true"/>
+                <NavigationProperty Name="CentroCustoDetails" Relationship="siagro.Veiculo_CentroCusto_Many_ZeroToOne0" FromRole="Veiculo" ToRole="CentroCusto"/>
+                <NavigationProperty Name="PlanoContaDetails" Relationship="siagro.Veiculo_PlanoConta_Many_ZeroToOne0" FromRole="Veiculo" ToRole="PlanoConta"/>
+                <NavigationProperty Name="MotoristaDetails" Relationship="siagro.Veiculo_Motorista_Many_ZeroToOne0" FromRole="Veiculo" ToRole="Motorista"/>
+                <NavigationProperty Name="MunicipioDetails" Relationship="siagro.Veiculo_Municipio_Many_ZeroToOne0" FromRole="Veiculo" ToRole="Municipio"/>
+                <NavigationProperty Name="UfDetails" Relationship="siagro.Veiculo_Uf_Many_ZeroToOne0" FromRole="Veiculo" ToRole="Uf"/>
+            </EntityType>
+            <EntityType Name="TipoTitulo">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+            </EntityType>
+            <EntityType Name="Cfop">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="150"/>
+            </EntityType>
+            <EntityType Name="PaisBacen">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Nome" Type="Edm.String" Nullable="false" MaxLength="100"/>
+            </EntityType>
+            <EntityType Name="SaldoEstoque">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="LocalEstoque" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Produto" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Saldo" Type="Edm.Int32" Nullable="true"/>
+                <NavigationProperty Name="LocalEstoqueDetails" Relationship="siagro.SaldoEstoque_LocalEstoque_Many_ZeroToOne0" FromRole="SaldoEstoque" ToRole="LocalEstoque"/>
+                <NavigationProperty Name="ProdutoDetails" Relationship="siagro.SaldoEstoque_Produto_Many_ZeroToOne0" FromRole="SaldoEstoque" ToRole="Produto"/>
+            </EntityType>
+            <EntityType Name="CondicaoPagamento">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="ComEntrada" Type="Edm.Boolean" Nullable="true"/>
+                <Property Name="DataVencimentoFixo" Type="Edm.String" Nullable="true" MaxLength="10"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="Id" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Intervalo" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="Parcelas" Type="Edm.Int32" Nullable="true"/>
+                <Property Name="VencimentoFixo" Type="Edm.Boolean" Nullable="true"/>
+            </EntityType>
+            <EntityType Name="PlanoConta">
+                <Key>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Bloqueada" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="ClasseConta" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" MaxLength="50"/>
+                <Property Name="Condicao" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Descricao" Type="Edm.String" Nullable="false" MaxLength="150"/>
+            </EntityType>
+            <Association Name="PedidoVenda_ParceiroNegocio_Many_ZeroToOne0">
+                <End Type="siagro.PedidoVenda" Multiplicity="*" Role="PedidoVenda"/>
+                <End Type="siagro.ParceiroNegocio" Multiplicity="0..1" Role="ParceiroNegocio"/>
+                <ReferentialConstraint>
+                    <Principal Role="ParceiroNegocio">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="PedidoVenda">
+                        <PropertyRef Name="Cliente"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ServicoArmazem_Produto_Many_ZeroToOne0">
+                <End Type="siagro.ServicoArmazem" Multiplicity="*" Role="ServicoArmazem"/>
+                <End Type="siagro.Produto" Multiplicity="0..1" Role="Produto"/>
+                <ReferentialConstraint>
+                    <Principal Role="Produto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ServicoArmazem">
+                        <PropertyRef Name="Produto"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Produto_PlanoConta_Many_ZeroToOne0">
+                <End Type="siagro.Produto" Multiplicity="*" Role="Produto"/>
+                <End Type="siagro.PlanoConta" Multiplicity="0..1" Role="PlanoConta"/>
+                <ReferentialConstraint>
+                    <Principal Role="PlanoConta">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="Produto">
+                        <PropertyRef Name="ContaContabil"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Produto_ItemContabil_Many_ZeroToOne0">
+                <End Type="siagro.Produto" Multiplicity="*" Role="Produto"/>
+                <End Type="siagro.ItemContabil" Multiplicity="0..1" Role="ItemContabil"/>
+                <ReferentialConstraint>
+                    <Principal Role="ItemContabil">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Produto">
+                        <PropertyRef Name="ItemContabil"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Produto_UnidadeMedida_Many_ZeroToOne0">
+                <End Type="siagro.Produto" Multiplicity="*" Role="Produto"/>
+                <End Type="siagro.UnidadeMedida" Multiplicity="0..1" Role="UnidadeMedida"/>
+                <ReferentialConstraint>
+                    <Principal Role="UnidadeMedida">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Produto">
+                        <PropertyRef Name="UnidadeMedida"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="CotacaoMoeda_Moeda_Many_ZeroToOne0">
+                <End Type="siagro.CotacaoMoeda" Multiplicity="*" Role="CotacaoMoeda"/>
+                <End Type="siagro.Moeda" Multiplicity="0..1" Role="Moeda"/>
+                <ReferentialConstraint>
+                    <Principal Role="Moeda">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="CotacaoMoeda">
+                        <PropertyRef Name="Moeda"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="MovimentoContaBancaria_ContaBancaria_Many_ZeroToOne0">
+                <End Type="siagro.MovimentoContaBancaria" Multiplicity="*" Role="MovimentoContaBancaria"/>
+                <End Type="siagro.ContaBancaria" Multiplicity="0..1" Role="ContaBancaria"/>
+                <ReferentialConstraint>
+                    <Principal Role="ContaBancaria">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="MovimentoContaBancaria">
+                        <PropertyRef Name="ContaBancaria"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="MovimentacaoArmazem_ContratoCompra_Many_ZeroToOne0">
+                <End Type="siagro.MovimentacaoArmazem" Multiplicity="*" Role="MovimentacaoArmazem"/>
+                <End Type="siagro.ContratoCompra" Multiplicity="0..1" Role="ContratoCompra"/>
+                <ReferentialConstraint>
+                    <Principal Role="ContratoCompra">
+                        <PropertyRef Name="Numero"/>
+                    </Principal>
+                    <Dependent Role="MovimentacaoArmazem">
+                        <PropertyRef Name="ContratoCompra"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="MovimentacaoArmazem_CreditoMonsanto_Many_ZeroToOne0">
+                <End Type="siagro.MovimentacaoArmazem" Multiplicity="*" Role="MovimentacaoArmazem"/>
+                <End Type="siagro.CreditoMonsanto" Multiplicity="0..1" Role="CreditoMonsanto"/>
+                <ReferentialConstraint>
+                    <Principal Role="CreditoMonsanto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="MovimentacaoArmazem">
+                        <PropertyRef Name="CreditoMonsanto"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="MovimentacaoArmazem_LoteArmazenagem_Many_ZeroToOne0">
+                <End Type="siagro.MovimentacaoArmazem" Multiplicity="*" Role="MovimentacaoArmazem"/>
+                <End Type="siagro.LoteArmazenagem" Multiplicity="0..1" Role="LoteArmazenagem"/>
+                <ReferentialConstraint>
+                    <Principal Role="LoteArmazenagem">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="MovimentacaoArmazem">
+                        <PropertyRef Name="Lote"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="MovimentacaoArmazem_Motorista_Many_ZeroToOne0">
+                <End Type="siagro.MovimentacaoArmazem" Multiplicity="*" Role="MovimentacaoArmazem"/>
+                <End Type="siagro.Motorista" Multiplicity="0..1" Role="Motorista"/>
+                <ReferentialConstraint>
+                    <Principal Role="Motorista">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="MovimentacaoArmazem">
+                        <PropertyRef Name="Motorista"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="MovimentacaoArmazem_ParceiroNegocio_Many_ZeroToOne0">
+                <End Type="siagro.MovimentacaoArmazem" Multiplicity="*" Role="MovimentacaoArmazem"/>
+                <End Type="siagro.ParceiroNegocio" Multiplicity="0..1" Role="ParceiroNegocio"/>
+                <ReferentialConstraint>
+                    <Principal Role="ParceiroNegocio">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="MovimentacaoArmazem">
+                        <PropertyRef Name="Parceiro"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="MovimentacaoArmazem_Produto_Many_ZeroToOne0">
+                <End Type="siagro.MovimentacaoArmazem" Multiplicity="*" Role="MovimentacaoArmazem"/>
+                <End Type="siagro.Produto" Multiplicity="0..1" Role="Produto"/>
+                <ReferentialConstraint>
+                    <Principal Role="Produto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="MovimentacaoArmazem">
+                        <PropertyRef Name="Produto"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="MovimentacaoArmazem_Veiculo_Many_ZeroToOne0">
+                <End Type="siagro.MovimentacaoArmazem" Multiplicity="*" Role="MovimentacaoArmazem"/>
+                <End Type="siagro.Veiculo" Multiplicity="0..1" Role="Veiculo"/>
+                <ReferentialConstraint>
+                    <Principal Role="Veiculo">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="MovimentacaoArmazem">
+                        <PropertyRef Name="Veiculo"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Municipio_Uf_Many_ZeroToOne0">
+                <End Type="siagro.Municipio" Multiplicity="*" Role="Municipio"/>
+                <End Type="siagro.Uf" Multiplicity="0..1" Role="Uf"/>
+                <ReferentialConstraint>
+                    <Principal Role="Uf">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Municipio">
+                        <PropertyRef Name="Uf"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="LoteArmazenagem_LocalEstoque_Many_ZeroToOne0">
+                <End Type="siagro.LoteArmazenagem" Multiplicity="*" Role="LoteArmazenagem"/>
+                <End Type="siagro.LocalEstoque" Multiplicity="0..1" Role="LocalEstoque"/>
+                <ReferentialConstraint>
+                    <Principal Role="LocalEstoque">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="LoteArmazenagem">
+                        <PropertyRef Name="Armazem"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="LoteArmazenagem_ParceiroNegocio_Many_ZeroToOne0">
+                <End Type="siagro.LoteArmazenagem" Multiplicity="*" Role="LoteArmazenagem"/>
+                <End Type="siagro.ParceiroNegocio" Multiplicity="0..1" Role="ParceiroNegocio"/>
+                <ReferentialConstraint>
+                    <Principal Role="ParceiroNegocio">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="LoteArmazenagem">
+                        <PropertyRef Name="Cliente"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="LoteArmazenagem_Produto_Many_ZeroToOne0">
+                <End Type="siagro.LoteArmazenagem" Multiplicity="*" Role="LoteArmazenagem"/>
+                <End Type="siagro.Produto" Multiplicity="0..1" Role="Produto"/>
+                <ReferentialConstraint>
+                    <Principal Role="Produto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="LoteArmazenagem">
+                        <PropertyRef Name="Produto"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="LoteArmazenagem_TabelaTarifa_Many_ZeroToOne0">
+                <End Type="siagro.LoteArmazenagem" Multiplicity="*" Role="LoteArmazenagem"/>
+                <End Type="siagro.TabelaTarifa" Multiplicity="0..1" Role="TabelaTarifa"/>
+                <ReferentialConstraint>
+                    <Principal Role="TabelaTarifa">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="LoteArmazenagem">
+                        <PropertyRef Name="Tabela"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Motorista_ParceiroNegocio_Many_ZeroToOne0">
+                <End Type="siagro.Motorista" Multiplicity="*" Role="Motorista"/>
+                <End Type="siagro.ParceiroNegocio" Multiplicity="0..1" Role="ParceiroNegocio"/>
+                <ReferentialConstraint>
+                    <Principal Role="ParceiroNegocio">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Motorista">
+                        <PropertyRef Name="ParceiroNegocio"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoCompraSaldo_LocalEstoque_Many_ZeroToOne0">
+                <End Type="siagro.ContratoCompraSaldo" Multiplicity="*" Role="ContratoCompraSaldo"/>
+                <End Type="siagro.LocalEstoque" Multiplicity="0..1" Role="LocalEstoque"/>
+                <ReferentialConstraint>
+                    <Principal Role="LocalEstoque">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoCompraSaldo">
+                        <PropertyRef Name="Armazem"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoCompraSaldo_ContratoCompra_Many_ZeroToOne0">
+                <End Type="siagro.ContratoCompraSaldo" Multiplicity="*" Role="ContratoCompraSaldo"/>
+                <End Type="siagro.ContratoCompra" Multiplicity="0..1" Role="ContratoCompra"/>
+                <ReferentialConstraint>
+                    <Principal Role="ContratoCompra">
+                        <PropertyRef Name="Numero"/>
+                    </Principal>
+                    <Dependent Role="ContratoCompraSaldo">
+                        <PropertyRef Name="Contrato"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoCompraSaldo_CreditoMonsanto_Many_ZeroToOne0">
+                <End Type="siagro.ContratoCompraSaldo" Multiplicity="*" Role="ContratoCompraSaldo"/>
+                <End Type="siagro.CreditoMonsanto" Multiplicity="0..1" Role="CreditoMonsanto"/>
+                <ReferentialConstraint>
+                    <Principal Role="CreditoMonsanto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoCompraSaldo">
+                        <PropertyRef Name="Royalties"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoCompraSaldo_UnidadeMedida_Many_ZeroToOne0">
+                <End Type="siagro.ContratoCompraSaldo" Multiplicity="*" Role="ContratoCompraSaldo"/>
+                <End Type="siagro.UnidadeMedida" Multiplicity="0..1" Role="UnidadeMedida"/>
+                <ReferentialConstraint>
+                    <Principal Role="UnidadeMedida">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoCompraSaldo">
+                        <PropertyRef Name="UnidadeMedida"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Empresa_Municipio_Many_ZeroToOne0">
+                <End Type="siagro.Empresa" Multiplicity="*" Role="Empresa"/>
+                <End Type="siagro.Municipio" Multiplicity="0..1" Role="Municipio"/>
+                <ReferentialConstraint>
+                    <Principal Role="Municipio">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Empresa">
+                        <PropertyRef Name="Municipio"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Empresa_PaisBacen_Many_ZeroToOne0">
+                <End Type="siagro.Empresa" Multiplicity="*" Role="Empresa"/>
+                <End Type="siagro.PaisBacen" Multiplicity="0..1" Role="PaisBacen"/>
+                <ReferentialConstraint>
+                    <Principal Role="PaisBacen">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Empresa">
+                        <PropertyRef Name="Pais"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Empresa_Uf_Many_ZeroToOne0">
+                <End Type="siagro.Empresa" Multiplicity="*" Role="Empresa"/>
+                <End Type="siagro.Uf" Multiplicity="0..1" Role="Uf"/>
+                <ReferentialConstraint>
+                    <Principal Role="Uf">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Empresa">
+                        <PropertyRef Name="Uf"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContaBancariaParceiros_ParceiroNegocio_Many_ZeroToOne0">
+                <End Type="siagro.ContaBancariaParceiros" Multiplicity="*" Role="ContaBancariaParceiros"/>
+                <End Type="siagro.ParceiroNegocio" Multiplicity="0..1" Role="ParceiroNegocio"/>
+                <ReferentialConstraint>
+                    <Principal Role="ParceiroNegocio">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContaBancariaParceiros">
+                        <PropertyRef Name="Parceiro"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="PedidoVendaItens_PedidoVenda_Many_ZeroToOne1">
+                <End Type="siagro.PedidoVendaItens" Multiplicity="*" Role="PedidoVendaItens"/>
+                <End Type="siagro.PedidoVenda" Multiplicity="0..1" Role="PedidoVenda"/>
+                <ReferentialConstraint>
+                    <Principal Role="PedidoVenda">
+                        <PropertyRef Name="Numero"/>
+                    </Principal>
+                    <Dependent Role="PedidoVendaItens">
+                        <PropertyRef Name="Pedido"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="PedidoVendaItens_Produto_Many_ZeroToOne0">
+                <End Type="siagro.PedidoVendaItens" Multiplicity="*" Role="PedidoVendaItens"/>
+                <End Type="siagro.Produto" Multiplicity="0..1" Role="Produto"/>
+                <ReferentialConstraint>
+                    <Principal Role="Produto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="PedidoVendaItens">
+                        <PropertyRef Name="Produto"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoCompra_Corretor_Many_ZeroToOne0">
+                <End Type="siagro.ContratoCompra" Multiplicity="*" Role="ContratoCompra"/>
+                <End Type="siagro.Corretor" Multiplicity="0..1" Role="Corretor"/>
+                <ReferentialConstraint>
+                    <Principal Role="Corretor">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoCompra">
+                        <PropertyRef Name="Corretor"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoCompra_CotacaoMoeda_Many_ZeroToOne0">
+                <End Type="siagro.ContratoCompra" Multiplicity="*" Role="ContratoCompra"/>
+                <End Type="siagro.CotacaoMoeda" Multiplicity="0..1" Role="CotacaoMoeda"/>
+                <ReferentialConstraint>
+                    <Principal Role="CotacaoMoeda">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoCompra">
+                        <PropertyRef Name="Cotacao"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoCompra_Moeda_Many_ZeroToOne0">
+                <End Type="siagro.ContratoCompra" Multiplicity="*" Role="ContratoCompra"/>
+                <End Type="siagro.Moeda" Multiplicity="0..1" Role="Moeda"/>
+                <ReferentialConstraint>
+                    <Principal Role="Moeda">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="ContratoCompra">
+                        <PropertyRef Name="Moeda"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoCompra_Produto_Many_ZeroToOne0">
+                <End Type="siagro.ContratoCompra" Multiplicity="*" Role="ContratoCompra"/>
+                <End Type="siagro.Produto" Multiplicity="0..1" Role="Produto"/>
+                <ReferentialConstraint>
+                    <Principal Role="Produto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoCompra">
+                        <PropertyRef Name="Produto"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoCompra_Safra_Many_ZeroToOne0">
+                <End Type="siagro.ContratoCompra" Multiplicity="*" Role="ContratoCompra"/>
+                <End Type="siagro.Safra" Multiplicity="0..1" Role="Safra"/>
+                <ReferentialConstraint>
+                    <Principal Role="Safra">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoCompra">
+                        <PropertyRef Name="Safra"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoCompra_UnidadeMedida_Many_ZeroToOne0">
+                <End Type="siagro.ContratoCompra" Multiplicity="*" Role="ContratoCompra"/>
+                <End Type="siagro.UnidadeMedida" Multiplicity="0..1" Role="UnidadeMedida"/>
+                <ReferentialConstraint>
+                    <Principal Role="UnidadeMedida">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoCompra">
+                        <PropertyRef Name="Unidade"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoCompra_Variedade_Many_ZeroToOne0">
+                <End Type="siagro.ContratoCompra" Multiplicity="*" Role="ContratoCompra"/>
+                <End Type="siagro.Variedade" Multiplicity="0..1" Role="Variedade"/>
+                <ReferentialConstraint>
+                    <Principal Role="Variedade">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoCompra">
+                        <PropertyRef Name="Variedade"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="NaturezaOperacao_Cfop_Many_ZeroToOne0">
+                <End Type="siagro.NaturezaOperacao" Multiplicity="*" Role="NaturezaOperacao"/>
+                <End Type="siagro.Cfop" Multiplicity="0..1" Role="Cfop"/>
+                <ReferentialConstraint>
+                    <Principal Role="Cfop">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="NaturezaOperacao">
+                        <PropertyRef Name="Cfop"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="NaturezaOperacao_CstCofins_Many_ZeroToOne0">
+                <End Type="siagro.NaturezaOperacao" Multiplicity="*" Role="NaturezaOperacao"/>
+                <End Type="siagro.CstCofins" Multiplicity="0..1" Role="CstCofins"/>
+                <ReferentialConstraint>
+                    <Principal Role="CstCofins">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="NaturezaOperacao">
+                        <PropertyRef Name="CstCofins"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="NaturezaOperacao_CstIcms_Many_ZeroToOne0">
+                <End Type="siagro.NaturezaOperacao" Multiplicity="*" Role="NaturezaOperacao"/>
+                <End Type="siagro.CstIcms" Multiplicity="0..1" Role="CstIcms"/>
+                <ReferentialConstraint>
+                    <Principal Role="CstIcms">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="NaturezaOperacao">
+                        <PropertyRef Name="CstIcms"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="NaturezaOperacao_CstIpi_Many_ZeroToOne0">
+                <End Type="siagro.NaturezaOperacao" Multiplicity="*" Role="NaturezaOperacao"/>
+                <End Type="siagro.CstIpi" Multiplicity="0..1" Role="CstIpi"/>
+                <ReferentialConstraint>
+                    <Principal Role="CstIpi">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="NaturezaOperacao">
+                        <PropertyRef Name="CstIpi"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="NaturezaOperacao_CstPis_Many_ZeroToOne0">
+                <End Type="siagro.NaturezaOperacao" Multiplicity="*" Role="NaturezaOperacao"/>
+                <End Type="siagro.CstPis" Multiplicity="0..1" Role="CstPis"/>
+                <ReferentialConstraint>
+                    <Principal Role="CstPis">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="NaturezaOperacao">
+                        <PropertyRef Name="CstPis"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContaPagar_CentroCusto_Many_ZeroToOne0">
+                <End Type="siagro.ContaPagar" Multiplicity="*" Role="ContaPagar"/>
+                <End Type="siagro.CentroCusto" Multiplicity="0..1" Role="CentroCusto"/>
+                <ReferentialConstraint>
+                    <Principal Role="CentroCusto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContaPagar">
+                        <PropertyRef Name="CentroCusto"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContaPagar_PlanoConta_Many_ZeroToOne0">
+                <End Type="siagro.ContaPagar" Multiplicity="*" Role="ContaPagar"/>
+                <End Type="siagro.PlanoConta" Multiplicity="0..1" Role="PlanoConta"/>
+                <ReferentialConstraint>
+                    <Principal Role="PlanoConta">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="ContaPagar">
+                        <PropertyRef Name="ContaContabil"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContaPagar_ParceiroNegocio_Many_ZeroToOne0">
+                <End Type="siagro.ContaPagar" Multiplicity="*" Role="ContaPagar"/>
+                <End Type="siagro.ParceiroNegocio" Multiplicity="0..1" Role="ParceiroNegocio"/>
+                <ReferentialConstraint>
+                    <Principal Role="ParceiroNegocio">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContaPagar">
+                        <PropertyRef Name="ParceiroNegocio"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContaPagar_TipoTitulo_Many_ZeroToOne0">
+                <End Type="siagro.ContaPagar" Multiplicity="*" Role="ContaPagar"/>
+                <End Type="siagro.TipoTitulo" Multiplicity="0..1" Role="TipoTitulo"/>
+                <ReferentialConstraint>
+                    <Principal Role="TipoTitulo">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="ContaPagar">
+                        <PropertyRef Name="TipoTitulo"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContaReceber_CentroCusto_Many_ZeroToOne0">
+                <End Type="siagro.ContaReceber" Multiplicity="*" Role="ContaReceber"/>
+                <End Type="siagro.CentroCusto" Multiplicity="0..1" Role="CentroCusto"/>
+                <ReferentialConstraint>
+                    <Principal Role="CentroCusto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContaReceber">
+                        <PropertyRef Name="CentroCusto"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContaReceber_PlanoConta_Many_ZeroToOne0">
+                <End Type="siagro.ContaReceber" Multiplicity="*" Role="ContaReceber"/>
+                <End Type="siagro.PlanoConta" Multiplicity="0..1" Role="PlanoConta"/>
+                <ReferentialConstraint>
+                    <Principal Role="PlanoConta">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="ContaReceber">
+                        <PropertyRef Name="ContaContabil"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContaReceber_ParceiroNegocio_Many_ZeroToOne0">
+                <End Type="siagro.ContaReceber" Multiplicity="*" Role="ContaReceber"/>
+                <End Type="siagro.ParceiroNegocio" Multiplicity="0..1" Role="ParceiroNegocio"/>
+                <ReferentialConstraint>
+                    <Principal Role="ParceiroNegocio">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContaReceber">
+                        <PropertyRef Name="ParceiroNegocio"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContaReceber_TipoTitulo_Many_ZeroToOne0">
+                <End Type="siagro.ContaReceber" Multiplicity="*" Role="ContaReceber"/>
+                <End Type="siagro.TipoTitulo" Multiplicity="0..1" Role="TipoTitulo"/>
+                <ReferentialConstraint>
+                    <Principal Role="TipoTitulo">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="ContaReceber">
+                        <PropertyRef Name="TipoTitulo"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Corretor_Municipio_Many_ZeroToOne0">
+                <End Type="siagro.Corretor" Multiplicity="*" Role="Corretor"/>
+                <End Type="siagro.Municipio" Multiplicity="0..1" Role="Municipio"/>
+                <ReferentialConstraint>
+                    <Principal Role="Municipio">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Corretor">
+                        <PropertyRef Name="Municipio"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Corretor_ParceiroNegocio_Many_ZeroToOne0">
+                <End Type="siagro.Corretor" Multiplicity="*" Role="Corretor"/>
+                <End Type="siagro.ParceiroNegocio" Multiplicity="0..1" Role="ParceiroNegocio"/>
+                <ReferentialConstraint>
+                    <Principal Role="ParceiroNegocio">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Corretor">
+                        <PropertyRef Name="ParceiroNegocio"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Corretor_Uf_Many_ZeroToOne0">
+                <End Type="siagro.Corretor" Multiplicity="*" Role="Corretor"/>
+                <End Type="siagro.Uf" Multiplicity="0..1" Role="Uf"/>
+                <ReferentialConstraint>
+                    <Principal Role="Uf">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Corretor">
+                        <PropertyRef Name="Uf"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Aplicativo_Modulo_Many_ZeroToOne0">
+                <End Type="siagro.Aplicativo" Multiplicity="*" Role="Aplicativo"/>
+                <End Type="siagro.Modulo" Multiplicity="0..1" Role="Modulo"/>
+                <ReferentialConstraint>
+                    <Principal Role="Modulo">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Aplicativo">
+                        <PropertyRef Name="Modulo"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="TransferenciaPropriedade_ContratoCompra_Many_ZeroToOne0">
+                <End Type="siagro.TransferenciaPropriedade" Multiplicity="*" Role="TransferenciaPropriedade"/>
+                <End Type="siagro.ContratoCompra" Multiplicity="0..1" Role="ContratoCompra"/>
+                <ReferentialConstraint>
+                    <Principal Role="ContratoCompra">
+                        <PropertyRef Name="Numero"/>
+                    </Principal>
+                    <Dependent Role="TransferenciaPropriedade">
+                        <PropertyRef Name="ContratoCompra"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="TransferenciaPropriedade_LoteArmazenagem_Many_ZeroToOne0">
+                <End Type="siagro.TransferenciaPropriedade" Multiplicity="*" Role="TransferenciaPropriedade"/>
+                <End Type="siagro.LoteArmazenagem" Multiplicity="0..1" Role="LoteArmazenagem"/>
+                <ReferentialConstraint>
+                    <Principal Role="LoteArmazenagem">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="TransferenciaPropriedade">
+                        <PropertyRef Name="LoteDestino"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="TransferenciaPropriedade_LoteArmazenagem_Many_ZeroToOne1">
+                <End Type="siagro.TransferenciaPropriedade" Multiplicity="*" Role="TransferenciaPropriedade"/>
+                <End Type="siagro.LoteArmazenagem" Multiplicity="0..1" Role="LoteArmazenagem"/>
+                <ReferentialConstraint>
+                    <Principal Role="LoteArmazenagem">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="TransferenciaPropriedade">
+                        <PropertyRef Name="LoteOrigem"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="TransferenciaPropriedade_Produto_Many_ZeroToOne0">
+                <End Type="siagro.TransferenciaPropriedade" Multiplicity="*" Role="TransferenciaPropriedade"/>
+                <End Type="siagro.Produto" Multiplicity="0..1" Role="Produto"/>
+                <ReferentialConstraint>
+                    <Principal Role="Produto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="TransferenciaPropriedade">
+                        <PropertyRef Name="Produto"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ParceiroNegocio_PlanoConta_Many_ZeroToOne0">
+                <End Type="siagro.ParceiroNegocio" Multiplicity="*" Role="ParceiroNegocio"/>
+                <End Type="siagro.PlanoConta" Multiplicity="0..1" Role="PlanoConta"/>
+                <ReferentialConstraint>
+                    <Principal Role="PlanoConta">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="ParceiroNegocio">
+                        <PropertyRef Name="ContaContabil"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ParceiroNegocio_ItemContabil_Many_ZeroToOne0">
+                <End Type="siagro.ParceiroNegocio" Multiplicity="*" Role="ParceiroNegocio"/>
+                <End Type="siagro.ItemContabil" Multiplicity="0..1" Role="ItemContabil"/>
+                <ReferentialConstraint>
+                    <Principal Role="ItemContabil">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ParceiroNegocio">
+                        <PropertyRef Name="ItemContabil"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ParceiroNegocio_Municipio_Many_ZeroToOne0">
+                <End Type="siagro.ParceiroNegocio" Multiplicity="*" Role="ParceiroNegocio"/>
+                <End Type="siagro.Municipio" Multiplicity="0..1" Role="Municipio"/>
+                <ReferentialConstraint>
+                    <Principal Role="Municipio">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ParceiroNegocio">
+                        <PropertyRef Name="Municipio"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ParceiroNegocio_PaisBacen_Many_ZeroToOne0">
+                <End Type="siagro.ParceiroNegocio" Multiplicity="*" Role="ParceiroNegocio"/>
+                <End Type="siagro.PaisBacen" Multiplicity="0..1" Role="PaisBacen"/>
+                <ReferentialConstraint>
+                    <Principal Role="PaisBacen">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ParceiroNegocio">
+                        <PropertyRef Name="Pais"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ParceiroNegocio_Uf_Many_ZeroToOne0">
+                <End Type="siagro.ParceiroNegocio" Multiplicity="*" Role="ParceiroNegocio"/>
+                <End Type="siagro.Uf" Multiplicity="0..1" Role="Uf"/>
+                <ReferentialConstraint>
+                    <Principal Role="Uf">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ParceiroNegocio">
+                        <PropertyRef Name="Uf"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContaBancaria_Banco_Many_ZeroToOne0">
+                <End Type="siagro.ContaBancaria" Multiplicity="*" Role="ContaBancaria"/>
+                <End Type="siagro.Banco" Multiplicity="0..1" Role="Banco"/>
+                <ReferentialConstraint>
+                    <Principal Role="Banco">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="ContaBancaria">
+                        <PropertyRef Name="Banco"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContaBancaria_PlanoConta_Many_ZeroToOne0">
+                <End Type="siagro.ContaBancaria" Multiplicity="*" Role="ContaBancaria"/>
+                <End Type="siagro.PlanoConta" Multiplicity="0..1" Role="PlanoConta"/>
+                <ReferentialConstraint>
+                    <Principal Role="PlanoConta">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="ContaBancaria">
+                        <PropertyRef Name="ContaContabil"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoVenda_Corretor_Many_ZeroToOne0">
+                <End Type="siagro.ContratoVenda" Multiplicity="*" Role="ContratoVenda"/>
+                <End Type="siagro.Corretor" Multiplicity="0..1" Role="Corretor"/>
+                <ReferentialConstraint>
+                    <Principal Role="Corretor">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoVenda">
+                        <PropertyRef Name="Corretor"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoVenda_CotacaoMoeda_Many_ZeroToOne0">
+                <End Type="siagro.ContratoVenda" Multiplicity="*" Role="ContratoVenda"/>
+                <End Type="siagro.CotacaoMoeda" Multiplicity="0..1" Role="CotacaoMoeda"/>
+                <ReferentialConstraint>
+                    <Principal Role="CotacaoMoeda">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoVenda">
+                        <PropertyRef Name="Cotacao"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoVenda_LocalDescarga_Many_ZeroToOne0">
+                <End Type="siagro.ContratoVenda" Multiplicity="*" Role="ContratoVenda"/>
+                <End Type="siagro.LocalDescarga" Multiplicity="0..1" Role="LocalDescarga"/>
+                <ReferentialConstraint>
+                    <Principal Role="LocalDescarga">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoVenda">
+                        <PropertyRef Name="LocalDescarga"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoVenda_Moeda_Many_ZeroToOne0">
+                <End Type="siagro.ContratoVenda" Multiplicity="*" Role="ContratoVenda"/>
+                <End Type="siagro.Moeda" Multiplicity="0..1" Role="Moeda"/>
+                <ReferentialConstraint>
+                    <Principal Role="Moeda">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="ContratoVenda">
+                        <PropertyRef Name="Moeda"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoVenda_Produto_Many_ZeroToOne0">
+                <End Type="siagro.ContratoVenda" Multiplicity="*" Role="ContratoVenda"/>
+                <End Type="siagro.Produto" Multiplicity="0..1" Role="Produto"/>
+                <ReferentialConstraint>
+                    <Principal Role="Produto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoVenda">
+                        <PropertyRef Name="Produto"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoVenda_Safra_Many_ZeroToOne0">
+                <End Type="siagro.ContratoVenda" Multiplicity="*" Role="ContratoVenda"/>
+                <End Type="siagro.Safra" Multiplicity="0..1" Role="Safra"/>
+                <ReferentialConstraint>
+                    <Principal Role="Safra">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoVenda">
+                        <PropertyRef Name="Safra"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoVenda_UnidadeMedida_Many_ZeroToOne0">
+                <End Type="siagro.ContratoVenda" Multiplicity="*" Role="ContratoVenda"/>
+                <End Type="siagro.UnidadeMedida" Multiplicity="0..1" Role="UnidadeMedida"/>
+                <ReferentialConstraint>
+                    <Principal Role="UnidadeMedida">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoVenda">
+                        <PropertyRef Name="Unidade"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ContratoVenda_Variedade_Many_ZeroToOne0">
+                <End Type="siagro.ContratoVenda" Multiplicity="*" Role="ContratoVenda"/>
+                <End Type="siagro.Variedade" Multiplicity="0..1" Role="Variedade"/>
+                <ReferentialConstraint>
+                    <Principal Role="Variedade">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ContratoVenda">
+                        <PropertyRef Name="Variedade"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Veiculo_CentroCusto_Many_ZeroToOne0">
+                <End Type="siagro.Veiculo" Multiplicity="*" Role="Veiculo"/>
+                <End Type="siagro.CentroCusto" Multiplicity="0..1" Role="CentroCusto"/>
+                <ReferentialConstraint>
+                    <Principal Role="CentroCusto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Veiculo">
+                        <PropertyRef Name="CentroCusto"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Veiculo_PlanoConta_Many_ZeroToOne0">
+                <End Type="siagro.Veiculo" Multiplicity="*" Role="Veiculo"/>
+                <End Type="siagro.PlanoConta" Multiplicity="0..1" Role="PlanoConta"/>
+                <ReferentialConstraint>
+                    <Principal Role="PlanoConta">
+                        <PropertyRef Name="Codigo"/>
+                    </Principal>
+                    <Dependent Role="Veiculo">
+                        <PropertyRef Name="ContaContabil"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Veiculo_Motorista_Many_ZeroToOne0">
+                <End Type="siagro.Veiculo" Multiplicity="*" Role="Veiculo"/>
+                <End Type="siagro.Motorista" Multiplicity="0..1" Role="Motorista"/>
+                <ReferentialConstraint>
+                    <Principal Role="Motorista">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Veiculo">
+                        <PropertyRef Name="Motorista"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Veiculo_Municipio_Many_ZeroToOne0">
+                <End Type="siagro.Veiculo" Multiplicity="*" Role="Veiculo"/>
+                <End Type="siagro.Municipio" Multiplicity="0..1" Role="Municipio"/>
+                <ReferentialConstraint>
+                    <Principal Role="Municipio">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Veiculo">
+                        <PropertyRef Name="MunicipioPlaca"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Veiculo_Uf_Many_ZeroToOne0">
+                <End Type="siagro.Veiculo" Multiplicity="*" Role="Veiculo"/>
+                <End Type="siagro.Uf" Multiplicity="0..1" Role="Uf"/>
+                <ReferentialConstraint>
+                    <Principal Role="Uf">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="Veiculo">
+                        <PropertyRef Name="UfPlaca"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="SaldoEstoque_LocalEstoque_Many_ZeroToOne0">
+                <End Type="siagro.SaldoEstoque" Multiplicity="*" Role="SaldoEstoque"/>
+                <End Type="siagro.LocalEstoque" Multiplicity="0..1" Role="LocalEstoque"/>
+                <ReferentialConstraint>
+                    <Principal Role="LocalEstoque">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="SaldoEstoque">
+                        <PropertyRef Name="LocalEstoque"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="SaldoEstoque_Produto_Many_ZeroToOne0">
+                <End Type="siagro.SaldoEstoque" Multiplicity="*" Role="SaldoEstoque"/>
+                <End Type="siagro.Produto" Multiplicity="0..1" Role="Produto"/>
+                <ReferentialConstraint>
+                    <Principal Role="Produto">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="SaldoEstoque">
+                        <PropertyRef Name="Produto"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="PedidoVenda_PedidoVendaItens_One_Many0">
+                <End Type="siagro.PedidoVenda" Multiplicity="1" Role="PedidoVenda"/>
+                <End Type="siagro.PedidoVendaItens" Multiplicity="*" Role="PedidoVendaItens"/>
+            </Association>
+            <EntityContainer Name="siagroContainer" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="UnidadeMedidas" EntityType="siagro.UnidadeMedida"/>
+                <EntitySet Name="PedidoVendas" EntityType="siagro.PedidoVenda"/>
+                <EntitySet Name="ServicoArmazems" EntityType="siagro.ServicoArmazem"/>
+                <EntitySet Name="Produtos" EntityType="siagro.Produto"/>
+                <EntitySet Name="CotacaoMoedas" EntityType="siagro.CotacaoMoeda"/>
+                <EntitySet Name="Variedades" EntityType="siagro.Variedade"/>
+                <EntitySet Name="MovimentoContaBancarias" EntityType="siagro.MovimentoContaBancaria"/>
+                <EntitySet Name="MovimentacaoArmazems" EntityType="siagro.MovimentacaoArmazem"/>
+                <EntitySet Name="Ufs" EntityType="siagro.Uf"/>
+                <EntitySet Name="Bancos" EntityType="siagro.Banco"/>
+                <EntitySet Name="ItemContabils" EntityType="siagro.ItemContabil"/>
+                <EntitySet Name="LocalDescargas" EntityType="siagro.LocalDescarga"/>
+                <EntitySet Name="Usuarios" EntityType="siagro.Usuario"/>
+                <EntitySet Name="CreditoMonsantos" EntityType="siagro.CreditoMonsanto"/>
+                <EntitySet Name="LocalEstoques" EntityType="siagro.LocalEstoque"/>
+                <EntitySet Name="Municipios" EntityType="siagro.Municipio"/>
+                <EntitySet Name="Modulos" EntityType="siagro.Modulo"/>
+                <EntitySet Name="CstIpis" EntityType="siagro.CstIpi"/>
+                <EntitySet Name="Safras" EntityType="siagro.Safra"/>
+                <EntitySet Name="TabelaTarifas" EntityType="siagro.TabelaTarifa"/>
+                <EntitySet Name="CstPisCofinss" EntityType="siagro.CstPisCofins"/>
+                <EntitySet Name="CaracteristicaQualidades" EntityType="siagro.CaracteristicaQualidade"/>
+                <EntitySet Name="LoteArmazenagems" EntityType="siagro.LoteArmazenagem"/>
+                <EntitySet Name="Motoristas" EntityType="siagro.Motorista"/>
+                <EntitySet Name="ContratoCompraSaldos" EntityType="siagro.ContratoCompraSaldo"/>
+                <EntitySet Name="Empresas" EntityType="siagro.Empresa"/>
+                <EntitySet Name="ContaBancariaParceiross" EntityType="siagro.ContaBancariaParceiros"/>
+                <EntitySet Name="PedidoVendaItenss" EntityType="siagro.PedidoVendaItens"/>
+                <EntitySet Name="ContratoCompras" EntityType="siagro.ContratoCompra"/>
+                <EntitySet Name="Moedas" EntityType="siagro.Moeda"/>
+                <EntitySet Name="NaturezaOperacaos" EntityType="siagro.NaturezaOperacao"/>
+                <EntitySet Name="CstPiss" EntityType="siagro.CstPis"/>
+                <EntitySet Name="CstCofinss" EntityType="siagro.CstCofins"/>
+                <EntitySet Name="ContaPagars" EntityType="siagro.ContaPagar"/>
+                <EntitySet Name="ContaRecebers" EntityType="siagro.ContaReceber"/>
+                <EntitySet Name="Corretors" EntityType="siagro.Corretor"/>
+                <EntitySet Name="Aplicativos" EntityType="siagro.Aplicativo"/>
+                <EntitySet Name="TransferenciaPropriedades" EntityType="siagro.TransferenciaPropriedade"/>
+                <EntitySet Name="ParceiroNegocios" EntityType="siagro.ParceiroNegocio"/>
+                <EntitySet Name="ContaBancarias" EntityType="siagro.ContaBancaria"/>
+                <EntitySet Name="ContratoVendas" EntityType="siagro.ContratoVenda"/>
+                <EntitySet Name="CentroCustos" EntityType="siagro.CentroCusto"/>
+                <EntitySet Name="CstIcmss" EntityType="siagro.CstIcms"/>
+                <EntitySet Name="Veiculos" EntityType="siagro.Veiculo"/>
+                <EntitySet Name="TipoTitulos" EntityType="siagro.TipoTitulo"/>
+                <EntitySet Name="Cfops" EntityType="siagro.Cfop"/>
+                <EntitySet Name="PaisBacens" EntityType="siagro.PaisBacen"/>
+                <EntitySet Name="SaldoEstoques" EntityType="siagro.SaldoEstoque"/>
+                <EntitySet Name="CondicaoPagamentos" EntityType="siagro.CondicaoPagamento"/>
+                <EntitySet Name="PlanoContas" EntityType="siagro.PlanoConta"/>
+                <AssociationSet Name="PedidoVenda_ParceiroNegocio_Many_ZeroToOne0Set" Association="siagro.PedidoVenda_ParceiroNegocio_Many_ZeroToOne0">
+                    <End EntitySet="PedidoVendas" Role="PedidoVenda"/>
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                </AssociationSet>
+                <AssociationSet Name="ServicoArmazem_Produto_Many_ZeroToOne0Set" Association="siagro.ServicoArmazem_Produto_Many_ZeroToOne0">
+                    <End EntitySet="ServicoArmazems" Role="ServicoArmazem"/>
+                    <End EntitySet="Produtos" Role="Produto"/>
+                </AssociationSet>
+                <AssociationSet Name="Produto_PlanoConta_Many_ZeroToOne0Set" Association="siagro.Produto_PlanoConta_Many_ZeroToOne0">
+                    <End EntitySet="Produtos" Role="Produto"/>
+                    <End EntitySet="PlanoContas" Role="PlanoConta"/>
+                </AssociationSet>
+                <AssociationSet Name="Produto_ItemContabil_Many_ZeroToOne0Set" Association="siagro.Produto_ItemContabil_Many_ZeroToOne0">
+                    <End EntitySet="Produtos" Role="Produto"/>
+                    <End EntitySet="ItemContabils" Role="ItemContabil"/>
+                </AssociationSet>
+                <AssociationSet Name="Produto_UnidadeMedida_Many_ZeroToOne0Set" Association="siagro.Produto_UnidadeMedida_Many_ZeroToOne0">
+                    <End EntitySet="Produtos" Role="Produto"/>
+                    <End EntitySet="UnidadeMedidas" Role="UnidadeMedida"/>
+                </AssociationSet>
+                <AssociationSet Name="CotacaoMoeda_Moeda_Many_ZeroToOne0Set" Association="siagro.CotacaoMoeda_Moeda_Many_ZeroToOne0">
+                    <End EntitySet="CotacaoMoedas" Role="CotacaoMoeda"/>
+                    <End EntitySet="Moedas" Role="Moeda"/>
+                </AssociationSet>
+                <AssociationSet Name="MovimentoContaBancaria_ContaBancaria_Many_ZeroToOne0Set" Association="siagro.MovimentoContaBancaria_ContaBancaria_Many_ZeroToOne0">
+                    <End EntitySet="MovimentoContaBancarias" Role="MovimentoContaBancaria"/>
+                    <End EntitySet="ContaBancarias" Role="ContaBancaria"/>
+                </AssociationSet>
+                <AssociationSet Name="MovimentacaoArmazem_ContratoCompra_Many_ZeroToOne0Set" Association="siagro.MovimentacaoArmazem_ContratoCompra_Many_ZeroToOne0">
+                    <End EntitySet="MovimentacaoArmazems" Role="MovimentacaoArmazem"/>
+                    <End EntitySet="ContratoCompras" Role="ContratoCompra"/>
+                </AssociationSet>
+                <AssociationSet Name="MovimentacaoArmazem_CreditoMonsanto_Many_ZeroToOne0Set" Association="siagro.MovimentacaoArmazem_CreditoMonsanto_Many_ZeroToOne0">
+                    <End EntitySet="MovimentacaoArmazems" Role="MovimentacaoArmazem"/>
+                    <End EntitySet="CreditoMonsantos" Role="CreditoMonsanto"/>
+                </AssociationSet>
+                <AssociationSet Name="MovimentacaoArmazem_LoteArmazenagem_Many_ZeroToOne0Set" Association="siagro.MovimentacaoArmazem_LoteArmazenagem_Many_ZeroToOne0">
+                    <End EntitySet="MovimentacaoArmazems" Role="MovimentacaoArmazem"/>
+                    <End EntitySet="LoteArmazenagems" Role="LoteArmazenagem"/>
+                </AssociationSet>
+                <AssociationSet Name="MovimentacaoArmazem_Motorista_Many_ZeroToOne0Set" Association="siagro.MovimentacaoArmazem_Motorista_Many_ZeroToOne0">
+                    <End EntitySet="MovimentacaoArmazems" Role="MovimentacaoArmazem"/>
+                    <End EntitySet="Motoristas" Role="Motorista"/>
+                </AssociationSet>
+                <AssociationSet Name="MovimentacaoArmazem_ParceiroNegocio_Many_ZeroToOne0Set" Association="siagro.MovimentacaoArmazem_ParceiroNegocio_Many_ZeroToOne0">
+                    <End EntitySet="MovimentacaoArmazems" Role="MovimentacaoArmazem"/>
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                </AssociationSet>
+                <AssociationSet Name="MovimentacaoArmazem_Produto_Many_ZeroToOne0Set" Association="siagro.MovimentacaoArmazem_Produto_Many_ZeroToOne0">
+                    <End EntitySet="MovimentacaoArmazems" Role="MovimentacaoArmazem"/>
+                    <End EntitySet="Produtos" Role="Produto"/>
+                </AssociationSet>
+                <AssociationSet Name="MovimentacaoArmazem_Veiculo_Many_ZeroToOne0Set" Association="siagro.MovimentacaoArmazem_Veiculo_Many_ZeroToOne0">
+                    <End EntitySet="MovimentacaoArmazems" Role="MovimentacaoArmazem"/>
+                    <End EntitySet="Veiculos" Role="Veiculo"/>
+                </AssociationSet>
+                <AssociationSet Name="Municipio_Uf_Many_ZeroToOne0Set" Association="siagro.Municipio_Uf_Many_ZeroToOne0">
+                    <End EntitySet="Municipios" Role="Municipio"/>
+                    <End EntitySet="Ufs" Role="Uf"/>
+                </AssociationSet>
+                <AssociationSet Name="LoteArmazenagem_LocalEstoque_Many_ZeroToOne0Set" Association="siagro.LoteArmazenagem_LocalEstoque_Many_ZeroToOne0">
+                    <End EntitySet="LoteArmazenagems" Role="LoteArmazenagem"/>
+                    <End EntitySet="LocalEstoques" Role="LocalEstoque"/>
+                </AssociationSet>
+                <AssociationSet Name="LoteArmazenagem_ParceiroNegocio_Many_ZeroToOne0Set" Association="siagro.LoteArmazenagem_ParceiroNegocio_Many_ZeroToOne0">
+                    <End EntitySet="LoteArmazenagems" Role="LoteArmazenagem"/>
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                </AssociationSet>
+                <AssociationSet Name="LoteArmazenagem_Produto_Many_ZeroToOne0Set" Association="siagro.LoteArmazenagem_Produto_Many_ZeroToOne0">
+                    <End EntitySet="LoteArmazenagems" Role="LoteArmazenagem"/>
+                    <End EntitySet="Produtos" Role="Produto"/>
+                </AssociationSet>
+                <AssociationSet Name="LoteArmazenagem_TabelaTarifa_Many_ZeroToOne0Set" Association="siagro.LoteArmazenagem_TabelaTarifa_Many_ZeroToOne0">
+                    <End EntitySet="LoteArmazenagems" Role="LoteArmazenagem"/>
+                    <End EntitySet="TabelaTarifas" Role="TabelaTarifa"/>
+                </AssociationSet>
+                <AssociationSet Name="Motorista_ParceiroNegocio_Many_ZeroToOne0Set" Association="siagro.Motorista_ParceiroNegocio_Many_ZeroToOne0">
+                    <End EntitySet="Motoristas" Role="Motorista"/>
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoCompraSaldo_LocalEstoque_Many_ZeroToOne0Set" Association="siagro.ContratoCompraSaldo_LocalEstoque_Many_ZeroToOne0">
+                    <End EntitySet="ContratoCompraSaldos" Role="ContratoCompraSaldo"/>
+                    <End EntitySet="LocalEstoques" Role="LocalEstoque"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoCompraSaldo_ContratoCompra_Many_ZeroToOne0Set" Association="siagro.ContratoCompraSaldo_ContratoCompra_Many_ZeroToOne0">
+                    <End EntitySet="ContratoCompraSaldos" Role="ContratoCompraSaldo"/>
+                    <End EntitySet="ContratoCompras" Role="ContratoCompra"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoCompraSaldo_CreditoMonsanto_Many_ZeroToOne0Set" Association="siagro.ContratoCompraSaldo_CreditoMonsanto_Many_ZeroToOne0">
+                    <End EntitySet="ContratoCompraSaldos" Role="ContratoCompraSaldo"/>
+                    <End EntitySet="CreditoMonsantos" Role="CreditoMonsanto"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoCompraSaldo_UnidadeMedida_Many_ZeroToOne0Set" Association="siagro.ContratoCompraSaldo_UnidadeMedida_Many_ZeroToOne0">
+                    <End EntitySet="ContratoCompraSaldos" Role="ContratoCompraSaldo"/>
+                    <End EntitySet="UnidadeMedidas" Role="UnidadeMedida"/>
+                </AssociationSet>
+                <AssociationSet Name="Empresa_Municipio_Many_ZeroToOne0Set" Association="siagro.Empresa_Municipio_Many_ZeroToOne0">
+                    <End EntitySet="Empresas" Role="Empresa"/>
+                    <End EntitySet="Municipios" Role="Municipio"/>
+                </AssociationSet>
+                <AssociationSet Name="Empresa_PaisBacen_Many_ZeroToOne0Set" Association="siagro.Empresa_PaisBacen_Many_ZeroToOne0">
+                    <End EntitySet="Empresas" Role="Empresa"/>
+                    <End EntitySet="PaisBacens" Role="PaisBacen"/>
+                </AssociationSet>
+                <AssociationSet Name="Empresa_Uf_Many_ZeroToOne0Set" Association="siagro.Empresa_Uf_Many_ZeroToOne0">
+                    <End EntitySet="Empresas" Role="Empresa"/>
+                    <End EntitySet="Ufs" Role="Uf"/>
+                </AssociationSet>
+                <AssociationSet Name="ContaBancariaParceiros_ParceiroNegocio_Many_ZeroToOne0Set" Association="siagro.ContaBancariaParceiros_ParceiroNegocio_Many_ZeroToOne0">
+                    <End EntitySet="ContaBancariaParceiross" Role="ContaBancariaParceiros"/>
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                </AssociationSet>
+                <AssociationSet Name="PedidoVendaItens_PedidoVenda_Many_ZeroToOne1Set" Association="siagro.PedidoVendaItens_PedidoVenda_Many_ZeroToOne1">
+                    <End EntitySet="PedidoVendaItenss" Role="PedidoVendaItens"/>
+                    <End EntitySet="PedidoVendas" Role="PedidoVenda"/>
+                </AssociationSet>
+                <AssociationSet Name="PedidoVendaItens_Produto_Many_ZeroToOne0Set" Association="siagro.PedidoVendaItens_Produto_Many_ZeroToOne0">
+                    <End EntitySet="PedidoVendaItenss" Role="PedidoVendaItens"/>
+                    <End EntitySet="Produtos" Role="Produto"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoCompra_Corretor_Many_ZeroToOne0Set" Association="siagro.ContratoCompra_Corretor_Many_ZeroToOne0">
+                    <End EntitySet="ContratoCompras" Role="ContratoCompra"/>
+                    <End EntitySet="Corretors" Role="Corretor"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoCompra_CotacaoMoeda_Many_ZeroToOne0Set" Association="siagro.ContratoCompra_CotacaoMoeda_Many_ZeroToOne0">
+                    <End EntitySet="ContratoCompras" Role="ContratoCompra"/>
+                    <End EntitySet="CotacaoMoedas" Role="CotacaoMoeda"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoCompra_Moeda_Many_ZeroToOne0Set" Association="siagro.ContratoCompra_Moeda_Many_ZeroToOne0">
+                    <End EntitySet="ContratoCompras" Role="ContratoCompra"/>
+                    <End EntitySet="Moedas" Role="Moeda"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoCompra_Produto_Many_ZeroToOne0Set" Association="siagro.ContratoCompra_Produto_Many_ZeroToOne0">
+                    <End EntitySet="ContratoCompras" Role="ContratoCompra"/>
+                    <End EntitySet="Produtos" Role="Produto"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoCompra_Safra_Many_ZeroToOne0Set" Association="siagro.ContratoCompra_Safra_Many_ZeroToOne0">
+                    <End EntitySet="ContratoCompras" Role="ContratoCompra"/>
+                    <End EntitySet="Safras" Role="Safra"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoCompra_UnidadeMedida_Many_ZeroToOne0Set" Association="siagro.ContratoCompra_UnidadeMedida_Many_ZeroToOne0">
+                    <End EntitySet="ContratoCompras" Role="ContratoCompra"/>
+                    <End EntitySet="UnidadeMedidas" Role="UnidadeMedida"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoCompra_Variedade_Many_ZeroToOne0Set" Association="siagro.ContratoCompra_Variedade_Many_ZeroToOne0">
+                    <End EntitySet="ContratoCompras" Role="ContratoCompra"/>
+                    <End EntitySet="Variedades" Role="Variedade"/>
+                </AssociationSet>
+                <AssociationSet Name="NaturezaOperacao_Cfop_Many_ZeroToOne0Set" Association="siagro.NaturezaOperacao_Cfop_Many_ZeroToOne0">
+                    <End EntitySet="NaturezaOperacaos" Role="NaturezaOperacao"/>
+                    <End EntitySet="Cfops" Role="Cfop"/>
+                </AssociationSet>
+                <AssociationSet Name="NaturezaOperacao_CstCofins_Many_ZeroToOne0Set" Association="siagro.NaturezaOperacao_CstCofins_Many_ZeroToOne0">
+                    <End EntitySet="NaturezaOperacaos" Role="NaturezaOperacao"/>
+                    <End EntitySet="CstCofinss" Role="CstCofins"/>
+                </AssociationSet>
+                <AssociationSet Name="NaturezaOperacao_CstIcms_Many_ZeroToOne0Set" Association="siagro.NaturezaOperacao_CstIcms_Many_ZeroToOne0">
+                    <End EntitySet="NaturezaOperacaos" Role="NaturezaOperacao"/>
+                    <End EntitySet="CstIcmss" Role="CstIcms"/>
+                </AssociationSet>
+                <AssociationSet Name="NaturezaOperacao_CstIpi_Many_ZeroToOne0Set" Association="siagro.NaturezaOperacao_CstIpi_Many_ZeroToOne0">
+                    <End EntitySet="NaturezaOperacaos" Role="NaturezaOperacao"/>
+                    <End EntitySet="CstIpis" Role="CstIpi"/>
+                </AssociationSet>
+                <AssociationSet Name="NaturezaOperacao_CstPis_Many_ZeroToOne0Set" Association="siagro.NaturezaOperacao_CstPis_Many_ZeroToOne0">
+                    <End EntitySet="NaturezaOperacaos" Role="NaturezaOperacao"/>
+                    <End EntitySet="CstPiss" Role="CstPis"/>
+                </AssociationSet>
+                <AssociationSet Name="ContaPagar_CentroCusto_Many_ZeroToOne0Set" Association="siagro.ContaPagar_CentroCusto_Many_ZeroToOne0">
+                    <End EntitySet="ContaPagars" Role="ContaPagar"/>
+                    <End EntitySet="CentroCustos" Role="CentroCusto"/>
+                </AssociationSet>
+                <AssociationSet Name="ContaPagar_PlanoConta_Many_ZeroToOne0Set" Association="siagro.ContaPagar_PlanoConta_Many_ZeroToOne0">
+                    <End EntitySet="ContaPagars" Role="ContaPagar"/>
+                    <End EntitySet="PlanoContas" Role="PlanoConta"/>
+                </AssociationSet>
+                <AssociationSet Name="ContaPagar_ParceiroNegocio_Many_ZeroToOne0Set" Association="siagro.ContaPagar_ParceiroNegocio_Many_ZeroToOne0">
+                    <End EntitySet="ContaPagars" Role="ContaPagar"/>
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                </AssociationSet>
+                <AssociationSet Name="ContaPagar_TipoTitulo_Many_ZeroToOne0Set" Association="siagro.ContaPagar_TipoTitulo_Many_ZeroToOne0">
+                    <End EntitySet="ContaPagars" Role="ContaPagar"/>
+                    <End EntitySet="TipoTitulos" Role="TipoTitulo"/>
+                </AssociationSet>
+                <AssociationSet Name="ContaReceber_CentroCusto_Many_ZeroToOne0Set" Association="siagro.ContaReceber_CentroCusto_Many_ZeroToOne0">
+                    <End EntitySet="ContaRecebers" Role="ContaReceber"/>
+                    <End EntitySet="CentroCustos" Role="CentroCusto"/>
+                </AssociationSet>
+                <AssociationSet Name="ContaReceber_PlanoConta_Many_ZeroToOne0Set" Association="siagro.ContaReceber_PlanoConta_Many_ZeroToOne0">
+                    <End EntitySet="ContaRecebers" Role="ContaReceber"/>
+                    <End EntitySet="PlanoContas" Role="PlanoConta"/>
+                </AssociationSet>
+                <AssociationSet Name="ContaReceber_ParceiroNegocio_Many_ZeroToOne0Set" Association="siagro.ContaReceber_ParceiroNegocio_Many_ZeroToOne0">
+                    <End EntitySet="ContaRecebers" Role="ContaReceber"/>
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                </AssociationSet>
+                <AssociationSet Name="ContaReceber_TipoTitulo_Many_ZeroToOne0Set" Association="siagro.ContaReceber_TipoTitulo_Many_ZeroToOne0">
+                    <End EntitySet="ContaRecebers" Role="ContaReceber"/>
+                    <End EntitySet="TipoTitulos" Role="TipoTitulo"/>
+                </AssociationSet>
+                <AssociationSet Name="Corretor_Municipio_Many_ZeroToOne0Set" Association="siagro.Corretor_Municipio_Many_ZeroToOne0">
+                    <End EntitySet="Corretors" Role="Corretor"/>
+                    <End EntitySet="Municipios" Role="Municipio"/>
+                </AssociationSet>
+                <AssociationSet Name="Corretor_ParceiroNegocio_Many_ZeroToOne0Set" Association="siagro.Corretor_ParceiroNegocio_Many_ZeroToOne0">
+                    <End EntitySet="Corretors" Role="Corretor"/>
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                </AssociationSet>
+                <AssociationSet Name="Corretor_Uf_Many_ZeroToOne0Set" Association="siagro.Corretor_Uf_Many_ZeroToOne0">
+                    <End EntitySet="Corretors" Role="Corretor"/>
+                    <End EntitySet="Ufs" Role="Uf"/>
+                </AssociationSet>
+                <AssociationSet Name="Aplicativo_Modulo_Many_ZeroToOne0Set" Association="siagro.Aplicativo_Modulo_Many_ZeroToOne0">
+                    <End EntitySet="Aplicativos" Role="Aplicativo"/>
+                    <End EntitySet="Modulos" Role="Modulo"/>
+                </AssociationSet>
+                <AssociationSet Name="TransferenciaPropriedade_ContratoCompra_Many_ZeroToOne0Set" Association="siagro.TransferenciaPropriedade_ContratoCompra_Many_ZeroToOne0">
+                    <End EntitySet="TransferenciaPropriedades" Role="TransferenciaPropriedade"/>
+                    <End EntitySet="ContratoCompras" Role="ContratoCompra"/>
+                </AssociationSet>
+                <AssociationSet Name="TransferenciaPropriedade_LoteArmazenagem_Many_ZeroToOne0Set" Association="siagro.TransferenciaPropriedade_LoteArmazenagem_Many_ZeroToOne0">
+                    <End EntitySet="TransferenciaPropriedades" Role="TransferenciaPropriedade"/>
+                    <End EntitySet="LoteArmazenagems" Role="LoteArmazenagem"/>
+                </AssociationSet>
+                <AssociationSet Name="TransferenciaPropriedade_LoteArmazenagem_Many_ZeroToOne1Set" Association="siagro.TransferenciaPropriedade_LoteArmazenagem_Many_ZeroToOne1">
+                    <End EntitySet="TransferenciaPropriedades" Role="TransferenciaPropriedade"/>
+                    <End EntitySet="LoteArmazenagems" Role="LoteArmazenagem"/>
+                </AssociationSet>
+                <AssociationSet Name="TransferenciaPropriedade_Produto_Many_ZeroToOne0Set" Association="siagro.TransferenciaPropriedade_Produto_Many_ZeroToOne0">
+                    <End EntitySet="TransferenciaPropriedades" Role="TransferenciaPropriedade"/>
+                    <End EntitySet="Produtos" Role="Produto"/>
+                </AssociationSet>
+                <AssociationSet Name="ParceiroNegocio_PlanoConta_Many_ZeroToOne0Set" Association="siagro.ParceiroNegocio_PlanoConta_Many_ZeroToOne0">
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                    <End EntitySet="PlanoContas" Role="PlanoConta"/>
+                </AssociationSet>
+                <AssociationSet Name="ParceiroNegocio_ItemContabil_Many_ZeroToOne0Set" Association="siagro.ParceiroNegocio_ItemContabil_Many_ZeroToOne0">
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                    <End EntitySet="ItemContabils" Role="ItemContabil"/>
+                </AssociationSet>
+                <AssociationSet Name="ParceiroNegocio_Municipio_Many_ZeroToOne0Set" Association="siagro.ParceiroNegocio_Municipio_Many_ZeroToOne0">
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                    <End EntitySet="Municipios" Role="Municipio"/>
+                </AssociationSet>
+                <AssociationSet Name="ParceiroNegocio_PaisBacen_Many_ZeroToOne0Set" Association="siagro.ParceiroNegocio_PaisBacen_Many_ZeroToOne0">
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                    <End EntitySet="PaisBacens" Role="PaisBacen"/>
+                </AssociationSet>
+                <AssociationSet Name="ParceiroNegocio_Uf_Many_ZeroToOne0Set" Association="siagro.ParceiroNegocio_Uf_Many_ZeroToOne0">
+                    <End EntitySet="ParceiroNegocios" Role="ParceiroNegocio"/>
+                    <End EntitySet="Ufs" Role="Uf"/>
+                </AssociationSet>
+                <AssociationSet Name="ContaBancaria_Banco_Many_ZeroToOne0Set" Association="siagro.ContaBancaria_Banco_Many_ZeroToOne0">
+                    <End EntitySet="ContaBancarias" Role="ContaBancaria"/>
+                    <End EntitySet="Bancos" Role="Banco"/>
+                </AssociationSet>
+                <AssociationSet Name="ContaBancaria_PlanoConta_Many_ZeroToOne0Set" Association="siagro.ContaBancaria_PlanoConta_Many_ZeroToOne0">
+                    <End EntitySet="ContaBancarias" Role="ContaBancaria"/>
+                    <End EntitySet="PlanoContas" Role="PlanoConta"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoVenda_Corretor_Many_ZeroToOne0Set" Association="siagro.ContratoVenda_Corretor_Many_ZeroToOne0">
+                    <End EntitySet="ContratoVendas" Role="ContratoVenda"/>
+                    <End EntitySet="Corretors" Role="Corretor"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoVenda_CotacaoMoeda_Many_ZeroToOne0Set" Association="siagro.ContratoVenda_CotacaoMoeda_Many_ZeroToOne0">
+                    <End EntitySet="ContratoVendas" Role="ContratoVenda"/>
+                    <End EntitySet="CotacaoMoedas" Role="CotacaoMoeda"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoVenda_LocalDescarga_Many_ZeroToOne0Set" Association="siagro.ContratoVenda_LocalDescarga_Many_ZeroToOne0">
+                    <End EntitySet="ContratoVendas" Role="ContratoVenda"/>
+                    <End EntitySet="LocalDescargas" Role="LocalDescarga"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoVenda_Moeda_Many_ZeroToOne0Set" Association="siagro.ContratoVenda_Moeda_Many_ZeroToOne0">
+                    <End EntitySet="ContratoVendas" Role="ContratoVenda"/>
+                    <End EntitySet="Moedas" Role="Moeda"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoVenda_Produto_Many_ZeroToOne0Set" Association="siagro.ContratoVenda_Produto_Many_ZeroToOne0">
+                    <End EntitySet="ContratoVendas" Role="ContratoVenda"/>
+                    <End EntitySet="Produtos" Role="Produto"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoVenda_Safra_Many_ZeroToOne0Set" Association="siagro.ContratoVenda_Safra_Many_ZeroToOne0">
+                    <End EntitySet="ContratoVendas" Role="ContratoVenda"/>
+                    <End EntitySet="Safras" Role="Safra"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoVenda_UnidadeMedida_Many_ZeroToOne0Set" Association="siagro.ContratoVenda_UnidadeMedida_Many_ZeroToOne0">
+                    <End EntitySet="ContratoVendas" Role="ContratoVenda"/>
+                    <End EntitySet="UnidadeMedidas" Role="UnidadeMedida"/>
+                </AssociationSet>
+                <AssociationSet Name="ContratoVenda_Variedade_Many_ZeroToOne0Set" Association="siagro.ContratoVenda_Variedade_Many_ZeroToOne0">
+                    <End EntitySet="ContratoVendas" Role="ContratoVenda"/>
+                    <End EntitySet="Variedades" Role="Variedade"/>
+                </AssociationSet>
+                <AssociationSet Name="Veiculo_CentroCusto_Many_ZeroToOne0Set" Association="siagro.Veiculo_CentroCusto_Many_ZeroToOne0">
+                    <End EntitySet="Veiculos" Role="Veiculo"/>
+                    <End EntitySet="CentroCustos" Role="CentroCusto"/>
+                </AssociationSet>
+                <AssociationSet Name="Veiculo_PlanoConta_Many_ZeroToOne0Set" Association="siagro.Veiculo_PlanoConta_Many_ZeroToOne0">
+                    <End EntitySet="Veiculos" Role="Veiculo"/>
+                    <End EntitySet="PlanoContas" Role="PlanoConta"/>
+                </AssociationSet>
+                <AssociationSet Name="Veiculo_Motorista_Many_ZeroToOne0Set" Association="siagro.Veiculo_Motorista_Many_ZeroToOne0">
+                    <End EntitySet="Veiculos" Role="Veiculo"/>
+                    <End EntitySet="Motoristas" Role="Motorista"/>
+                </AssociationSet>
+                <AssociationSet Name="Veiculo_Municipio_Many_ZeroToOne0Set" Association="siagro.Veiculo_Municipio_Many_ZeroToOne0">
+                    <End EntitySet="Veiculos" Role="Veiculo"/>
+                    <End EntitySet="Municipios" Role="Municipio"/>
+                </AssociationSet>
+                <AssociationSet Name="Veiculo_Uf_Many_ZeroToOne0Set" Association="siagro.Veiculo_Uf_Many_ZeroToOne0">
+                    <End EntitySet="Veiculos" Role="Veiculo"/>
+                    <End EntitySet="Ufs" Role="Uf"/>
+                </AssociationSet>
+                <AssociationSet Name="SaldoEstoque_LocalEstoque_Many_ZeroToOne0Set" Association="siagro.SaldoEstoque_LocalEstoque_Many_ZeroToOne0">
+                    <End EntitySet="SaldoEstoques" Role="SaldoEstoque"/>
+                    <End EntitySet="LocalEstoques" Role="LocalEstoque"/>
+                </AssociationSet>
+                <AssociationSet Name="SaldoEstoque_Produto_Many_ZeroToOne0Set" Association="siagro.SaldoEstoque_Produto_Many_ZeroToOne0">
+                    <End EntitySet="SaldoEstoques" Role="SaldoEstoque"/>
+                    <End EntitySet="Produtos" Role="Produto"/>
+                </AssociationSet>
+                <AssociationSet Name="PedidoVenda_PedidoVendaItens_One_Many0Set" Association="siagro.PedidoVenda_PedidoVendaItens_One_Many0">
+                    <End EntitySet="PedidoVendas" Role="PedidoVenda"/>
+                    <End EntitySet="PedidoVendaItenss" Role="PedidoVendaItens"/>
+                </AssociationSet>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,85 @@
+<mvc:View controllerName="br.com.idxtecCotacaoMoeda.controller.CotacaoMoeda"
+xmlns:html="http://www.w3.org/1999/xhtml"
+xmlns:mvc="sap.ui.core.mvc"
+displayBlock="true"
+xmlns="sap.m"
+xmlns:t="sap.ui.table">
+	<App>
+		<pages>
+			<Page showHeader="false">
+				<content>
+					<VBox class="sapUiSmallMargin">
+						<Panel headerText="Cotação Moeda">
+							<t:Table id="tableCotacao"
+								rows="{path: '/CotacaoMoedas',
+									parameters: {
+										expand: 'MoedaDetails'
+									}}"
+								selectionMode="Single"
+								selectionBehavior="Row"
+								enableSelectAll="false"
+								editable="true"
+								visibleRowCountMode="Interactive"
+								enableBusyIndicator="true"
+								alternateRowColors="true"
+								enableCustomFilter="false">
+								<t:toolbar>
+									<Toolbar>
+										<Title text="Lista de Cotação"/>
+									</Toolbar>
+								</t:toolbar>
+								<t:columns>
+									<t:Column filterProperty="Data" sortProperty="Data">
+										<Label text="Data"/>
+										<t:template>
+											<Text text="{
+												path: 'Data',
+												type: 'sap.ui.model.type.Date',
+												formatOptions: {
+													style: 'short'
+												}}"/>
+										</t:template>
+									</t:Column>
+									<t:Column filterProperty="Cotacao" sortProperty="Cotacao">
+										<Label text="Cotação"/>
+										<t:template>
+											<Text text="{
+												path: 'Cotacao',
+												type: 'sap.ui.model.odata.type.Single',
+												formatOptions: {
+													decimals: 2,
+													decimalSeparator: ','
+												}}"/>
+										</t:template>
+									</t:Column>
+									<t:Column filterProperty="MoedaDetails/Nome" sortProperty="MoedaDetails/Nome">
+										<Label text="Moeda"/>
+										<t:template>
+											<Text text="{MoedaDetails/Nome}"/>
+										</t:template>
+									</t:Column>
+								</t:columns>
+								<t:footer>
+									<Toolbar>
+										<Button icon="sap-icon://refresh" press="onRefresh"/>
+										<ToolbarSpacer/>
+										<Button icon="sap-icon://filter"/>
+										<Button icon="sap-icon://clear-filter"/>
+									</Toolbar>
+								</t:footer>
+							</t:Table>
+						</Panel>
+					</VBox>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://add" text="Incluir novo" press="onIncluir"/>
+						<Button icon="sap-icon://edit" text="Editar" press="onEditar"/>
+						<Button icon="sap-icon://delete" text="Remover" press="onRemover"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

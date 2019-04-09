@@ -1,0 +1,14 @@
+.sapUiTableSelModeSingle .sapUiTableRowHdr.sapUiTableRowSel {
+	background-color: #6280af;
+}
+
+.sapUiTableSelModeSingle .sapUiTableRowHdr.sapUiTableRowSel.sapUiTableRowHvr{
+	background-color: #6280af;
+}
+
+.sapUiTableCtrl tr.sapUiTableRowSel:not(.sapUiTableGroupHeader) > td {
+	border-top-style: ridge;
+	border-bottom-style: ridge;
+	border-top-color: #28549b;
+	border-bottom-color: #28549b;
+}
