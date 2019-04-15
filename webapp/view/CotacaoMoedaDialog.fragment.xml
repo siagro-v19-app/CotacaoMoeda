@@ -4,9 +4,9 @@
    <Dialog
 		id="CotacaoMoedaDialog"
 		title="{view>/titulo}"
-		class="sapUiSmallMargin">
+		class="sapUiSmallMargin sapUiSizeCompact">
    	
-   		<VBox id="vBoxCotacao" class="sapUiSmallMargin sapUiSizeCompact">	
+   		<VBox id="vBoxCotacao" class="sapUiSmallMargin">	
 			<Label text="Data:" labelFor="data" required="true"/>
 			<DatePicker id="data" dateValue="{model>/Data}" displayFormat="dd.MM.yyyy" placeholder="dd.mm.aaaa"/>
 			
@@ -38,8 +38,8 @@
 		</VBox>
    		
    		<buttons>
-   			<Button text="Salvar" press="onSaveDialog"/>
-   			<Button text="Fechar" press="onCloseDialog"/>
+   			<Button text="Salvar" press="onSaveDialog" type="Accept"/>
+   			<Button text="Fechar" press="onCloseDialog" type="Reject"/>
    		</buttons>
    </Dialog>
 </core:FragmentDefinition>

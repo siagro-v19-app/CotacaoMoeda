@@ -6,9 +6,11 @@ sap.ui.define([
 	
 	return {
 		
-		handleValueHelp: function(oView, sInputId) {
+		handleValueHelp: function(oView, sInputId, oController) {
 			this._oView = oView;
 			this._inputId = sInputId;
+			
+			oController.getOwnerComponent().getModel().refresh(true);
 			
 			var sFrag = "br.com.idxtecCotacaoMoeda.helpers.MoedaHelpDialog"; 
 			if (!this._valueHelpDialog) {
@@ -38,6 +40,8 @@ sap.ui.define([
 				oInput.setSelectedKey(sId);
 			}
 			evt.getSource().getBinding("items").filter([]);
+			
+			this._valueHelpDialog = undefined;
 		}
 		
 	};

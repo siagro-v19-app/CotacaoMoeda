@@ -7,7 +7,7 @@
 }
 
 .sapUiTableCtrl tr.sapUiTableRowSel:not(.sapUiTableGroupHeader) > td {
-	border-top-style: ridge;
+	border-top-style: hidden;
 	border-bottom-style: ridge;
 	border-top-color: #28549b;
 	border-bottom-color: #28549b;

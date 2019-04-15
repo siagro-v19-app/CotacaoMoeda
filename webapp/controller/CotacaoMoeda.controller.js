@@ -2,9 +2,11 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/m/MessageBox",
 	"sap/ui/model/json/JSONModel",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator",
 	"br/com/idxtecCotacaoMoeda/helpers/MoedaHelpDialog",
 	"br/com/idxtecCotacaoMoeda/services/Session"
-], function(Controller, MessageBox, JSONModel, MoedaHelpDialog, Session) {
+], function(Controller, MessageBox, JSONModel, Filter, FilterOperator, MoedaHelpDialog, Session) {
 	"use strict";
 
 	return Controller.extend("br.com.idxtecCotacaoMoeda.controller.CotacaoMoeda", {
@@ -16,6 +18,29 @@ sap.ui.define([
 
 			this.getOwnerComponent().setModel(oJSONModel, "model");
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+			
+			this.getModel().attachMetadataLoaded(function(){
+				var oFilter = new Filter("Empresa", FilterOperator.EQ, Session.get("EMPRESA_ID"));
+				var oView = this.getView();
+				var oTable = oView.byId("tableCotacao");
+				var oColumn = oView.byId("columnMoeda");
+				
+				oTable.sort(oColumn);
+				oView.byId("tableCotacao").getBinding("rows").filter(oFilter, "Application");
+			});
+		},
+		
+		filtraCotacao: function(oEvent){
+			var sQuery = oEvent.getParameter("query");
+			var oFilter1 = new Filter("Empresa", FilterOperator.EQ, Session.get("EMPRESA_ID"));
+			var oFilter2 = new Filter("MoedaDetails/Nome", FilterOperator.Contains, sQuery);
+			
+			var aFilters = [
+				oFilter1,
+				oFilter2
+			];
+
+			this.getView().byId("tableCotacao").getBinding("rows").filter(aFilters, "Application");
 		},
 		
 		moedaReceived: function(){
