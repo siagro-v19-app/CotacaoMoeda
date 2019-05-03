@@ -19,14 +19,19 @@ sap.ui.define([
 			this.getOwnerComponent().setModel(oJSONModel, "model");
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 			
-			this.getModel().attachMetadataLoaded(function(){
-				var oFilter = new Filter("Empresa", FilterOperator.EQ, Session.get("EMPRESA_ID"));
-				var oView = this.getView();
-				var oTable = oView.byId("tableCotacao");
-				var oColumn = oView.byId("columnMoeda");
-				
-				oTable.sort(oColumn);
-				oView.byId("tableCotacao").getBinding("rows").filter(oFilter, "Application");
+			var oFilter = new Filter("Empresa", FilterOperator.EQ, Session.get("EMPRESA_ID"));
+			var oView = this.getView();
+			var oTable = oView.byId("tableCotacao");
+			
+			oTable.bindRows({
+				path: '/CotacaoMoedas',
+				sorter: {
+					path: 'Cotacao'
+				},
+				parameters: {
+					expand: 'MoedaDetails'
+				},
+				filters: oFilter
 			});
 		},
 		

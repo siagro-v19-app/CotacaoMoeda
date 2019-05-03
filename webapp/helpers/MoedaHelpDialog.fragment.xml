@@ -1,17 +1,32 @@
 <core:FragmentDefinition
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core">
-	<SelectDialog
+	<TableSelectDialog
 		title="Moeda"
 		class="sapUiPopupWithPadding sapUiSizeCompact"
 		items="{path: '/Moedas', sorter: {path: 'Nome'}}"
 		search="_handleValueHelpSearch"
 		confirm="_handleValueHelpClose"
 		cancel="_handleValueHelpClose">
-		<StandardListItem
-			iconDensityAware="false"
-			iconInset="false"
-			title="{Nome}"
-			description="{Codigo}" />
-	</SelectDialog>
+		<ColumnListItem>
+			<cells>
+				<ObjectNumber
+					number="{Codigo}"/>
+				<ObjectIdentifier
+					title="{Nome}"/>
+			</cells>
+		</ColumnListItem>
+		<columns>
+			<Column width="6em">
+				<header>
+					<Text text="Código"/>
+				</header>
+			</Column>
+			<Column width="6em">
+				<header>
+					<Text text="Moeda"/>
+				</header>
+			</Column>
+		</columns>
+	</TableSelectDialog>
 </core:FragmentDefinition>

@@ -9,13 +9,6 @@ xmlns:t="sap.ui.table">
 			<Page showHeader="false" class="sapUiContentPadding" enableScrolling="false">
 				<content>
 					<t:Table id="tableCotacao"
-						rows="{path: '/CotacaoMoedas',
-							sorter: {
-								path: 'Cotacao'
-							},
-							parameters: {
-								expand: 'MoedaDetails'
-							}}"
 						selectionMode="Single"
 						selectionBehavior="Row"
 						class="sapUiSizeCondensed"
